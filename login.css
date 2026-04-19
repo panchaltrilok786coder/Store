@@ -1,0 +1,140 @@
+/* 🔤 FONT + RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* 🌐 ROOT COLORS (LIGHT + OCEAN GLOW) */
+:root {
+  --bg-light: #f8fafc;
+  --glass: rgba(255,255,255,0.25);
+  --border: rgba(255,255,255,0.4);
+  --text-dark: #0f172a;
+  --muted: #64748b;
+  --accent: #38bdf8;
+  --accent2: #0ea5e9;
+}
+
+/* 🌊 BACKGROUND */
+body {
+  background: radial-gradient(circle at top, #dbeafe, var(--bg-light));
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🌊 GLOW LAYER */
+.login-bg-section {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 20%, rgba(56,189,248,0.3), transparent),
+              radial-gradient(circle at 80% 30%, rgba(14,165,233,0.3), transparent);
+  z-index: -1;
+}
+
+/* 🔷 LOGO */
+.login-logo-section {
+  text-align: center;
+  padding: 30px 0 10px;
+}
+
+.login-logo-text {
+  font-size: 32px;
+  font-weight: 600;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 🔐 AUTH */
+.login-auth-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.login-auth-box {
+  width: 100%;
+  max-width: 420px;
+  padding: 30px;
+  border-radius: 18px;
+
+  backdrop-filter: blur(18px);
+  background: var(--glass);
+  border: 1px solid var(--border);
+
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+/* TITLES */
+.login-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--text-dark);
+}
+
+/* INPUTS */
+.login-input {
+  width: 100%;
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.6);
+  color: var(--text-dark);
+}
+
+/* BUTTON */
+.login-btn {
+  width: 100%;
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  color: white;
+  transition: 0.3s;
+}
+
+.login-btn:hover {
+  transform: scale(1.03);
+  opacity: 0.9;
+}
+
+/* SWITCH TEXT */
+.login-switch-text {
+  margin-top: 15px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.login-switch-link {
+  color: var(--accent);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* FOOTER */
+.login-footer-section {
+  text-align: center;
+  padding: 20px;
+  color: var(--muted);
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 500px) {
+  .login-auth-box {
+    padding: 20px;
+  }
+
+  .login-logo-text {
+    font-size: 26px;
+  }
+}
