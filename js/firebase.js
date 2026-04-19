@@ -7,12 +7,13 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase
 
 // 🔥 Your Firebase config (replace with your real config)
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "trilok-store.firebaseapp.com",
-  projectId: "trilok-store",
-  storageBucket: "trilok-store.appspot.com",
-  messagingSenderId: "XXXX",
-  appId: "XXXX"
+    apiKey: "AIzaSyBMdS-QLx29KMAHy2SJ9V8SKX8U181kSLw",
+    authDomain: "store-da9c1.firebaseapp.com",
+    projectId: "store-da9c1",
+    storageBucket: "store-da9c1.firebasestorage.app",
+    messagingSenderId: "22885736244",
+    appId: "1:22885736244:web:75b757fbfeab977fc70f61",
+    measurementId: "G-D6KMB3XL9E"
 };
 
 // Initialize Firebase
