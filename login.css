@@ -1,14 +1,15 @@
-/* RESET */
+    /* RESET */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
-/* BODY */
+/* FULL SCREEN BACKGROUND */
 body {
-  font-family: Poppins, sans-serif;
   height: 100vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,120 +17,142 @@ body {
   overflow: hidden;
 }
 
-/* BACKGROUND GLOW */
-.bg {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at top, #38bdf8, transparent);
-  opacity: 0.25;
-}
+/* MAIN CONTAINER (NOW BIG + RESPONSIVE PANEL) */
+.container {
+  width: 92%;
+  max-width: 900px;
+  height: 85vh;
 
-/* LOGIN BOX */
-.login-container {
-  width: 90%;
-  max-width: 380px;
-  padding: 30px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(18px);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+
+  border-radius: 20px;
+  padding: 40px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   color: white;
-  text-align: center;
-  z-index: 1;
+
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
 }
 
 /* LOGO */
+/* LOGO - PREMIUM GRADIENT STYLE */
 .logo {
-  font-size: 26px;
-  font-weight: bold;
-  margin-bottom: 15px;
-  color: #38bdf8;
+  font-size: 100px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 30px;
   letter-spacing: 2px;
+  /* Gradient text */
+  background: linear-gradient(90deg, #38bdf8, #0ea5e9, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Glow effect */
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
 }
 
-/* TITLE */
-h2 {
-  margin-bottom: 10px;
+/* TOGGLE */
+.toggle {
+  display: flex;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto 25px auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.toggle button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  cursor: pointer;
+  background: #1e293b;
+  color: white;
+  transition: 0.3s;
+}
+
+.toggle .active {
+  background: #38bdf8;
+  color: black;
+  font-weight: bold;
+}
+
+/* FORM AREA */
+.form {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 /* INPUTS */
-input {
+.form input {
   width: 100%;
-  padding: 14px;
+  padding: 15px;
   margin: 10px 0;
-  border-radius: 10px;
+
   border: none;
+  border-radius: 10px;
+
   outline: none;
   font-size: 15px;
 }
 
-/* PASSWORD BOX */
-.password-box {
-  display: flex;
-  align-items: center;
-}
-
-.password-box input {
-  flex: 1;
-}
-
-.password-box button {
-  margin-left: 6px;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
 /* BUTTON */
-button#login-submit-btn {
+.form button {
   width: 100%;
-  padding: 14px;
-  margin-top: 10px;
+  padding: 15px;
+  margin-top: 15px;
+
   border: none;
   border-radius: 10px;
-  background: #38bdf8;
-  font-weight: bold;
-  cursor: pointer;
-}
 
-/* SWITCH TEXT */
-.switch-text {
-  margin-top: 12px;
-  font-size: 14px;
-  color: #38bdf8;
+  background: #38bdf8;
   cursor: pointer;
+
+  font-weight: bold;
+  font-size: 16px;
 }
 
 /* ERROR */
-#error-box {
+#error {
+  margin-top: 12px;
+  text-align: center;
   color: #ff4d4d;
-  font-size: 13px;
-  min-height: 18px;
+  font-size: 14px;
 }
 
-/* LOADING */
-.hidden {
-  display: none;
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    height: 90vh;
+    padding: 25px;
+  }
+
+  .logo {
+    font-size: 24px;
+  }
+
+  .form {
+    max-width: 100%;
+  }
 }
 
-/* RESPONSIVENESS FIXES */
+/* SMALL DEVICES */
 @media (max-width: 480px) {
-  .login-container {
+  .container {
+    height: 95vh;
     padding: 20px;
     border-radius: 14px;
   }
 
-  .logo {
-    font-size: 22px;
-  }
-
-  input {
-    padding: 12px;
-  }
-
-  button {
-    padding: 12px;
+  .toggle {
+    max-width: 100%;
   }
 }
