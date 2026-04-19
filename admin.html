@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Store - Admin Dashboard</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Store Admin Dashboard - Manage products, orders, and users">
+  <meta name="keywords" content="admin dashboard, store admin, ecommerce admin panel">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="admin.css">
+
+  <!-- JS -->
+  <script defer src="admin.js"></script>
+</head>
+
+<body>
+
+  <!-- 🌌 BACKGROUND LAYER -->
+  <section class="admin-bg-section"></section>
+
+  <!-- 🧭 NAVBAR -->
+  <header class="admin-navbar">
+
+    <div class="admin-logo-section">
+      <h1 class="admin-logo-text">Store Admin</h1>
+    </div>
+
+    <nav class="admin-nav-links">
+      <a href="#dashboard" class="admin-nav-link">Dashboard</a>
+      <a href="#products" class="admin-nav-link">Products</a>
+      <a href="#orders" class="admin-nav-link">Orders</a>
+      <a href="#users" class="admin-nav-link">Users</a>
+    </nav>
+
+    <button id="admin-logout-btn" class="admin-logout-btn">
+      Logout
+    </button>
+
+  </header>
+
+  <!-- 📊 MAIN DASHBOARD WRAPPER -->
+  <main class="admin-main">
+
+    <!-- 📌 DASHBOARD SECTION -->
+    <section id="dashboard" class="admin-section">
+
+      <h2 class="admin-section-title">Dashboard</h2>
+
+      <div class="admin-card-grid">
+
+        <div class="admin-card">
+          <h3>Total Products</h3>
+          <p id="admin-total-products">0</p>
+        </div>
+
+        <div class="admin-card">
+          <h3>Total Orders</h3>
+          <p id="admin-total-orders">0</p>
+        </div>
+
+        <div class="admin-card">
+          <h3>Total Users</h3>
+          <p id="admin-total-users">0</p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- 📦 PRODUCTS SECTION -->
+    <section id="products" class="admin-section">
+
+      <h2 class="admin-section-title">Products</h2>
+
+      <!-- ADD PRODUCT FORM -->
+      <div class="admin-form-container">
+
+        <form id="admin-product-form">
+
+          <input 
+            type="text" 
+            id="admin-product-name-input" 
+            class="admin-input"
+            placeholder="Product Name"
+          />
+
+          <input 
+            type="number" 
+            id="admin-product-price-input" 
+            class="admin-input"
+            placeholder="Price"
+          />
+
+          <input 
+            type="file" 
+            id="admin-product-image-input" 
+            class="admin-input"
+          />
+
+          <button type="submit" id="admin-add-product-btn" class="admin-btn">
+            Add Product
+          </button>
+
+        </form>
+
+      </div>
+
+      <!-- PRODUCT LIST -->
+      <div id="admin-product-list" class="admin-grid"></div>
+
+    </section>
+
+    <!-- 📦 ORDERS SECTION -->
+    <section id="orders" class="admin-section">
+
+      <h2 class="admin-section-title">Orders</h2>
+
+      <div id="admin-orders-list" class="admin-list"></div>
+
+    </section>
+
+    <!-- 👥 USERS SECTION -->
+    <section id="users" class="admin-section">
+
+      <h2 class="admin-section-title">Users</h2>
+
+      <div id="admin-users-list" class="admin-list"></div>
+
+    </section>
+
+  </main>
+
+  <!-- 📄 FOOTER -->
+  <footer class="admin-footer">
+    <p>© 2026 Store Admin Panel</p>
+  </footer>
+
+</body>
+</html>
