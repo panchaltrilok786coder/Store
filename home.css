@@ -1,0 +1,151 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Poppins, sans-serif;
+}
+
+/* ================= BODY ================= */
+body {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+/* ================= NAVBAR ================= */
+.home-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(12px);
+}
+
+.home-logo {
+  font-size: 26px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #38bdf8, #0ea5e9, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* SEARCH */
+.home-search-input {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  width: 220px;
+}
+
+/* NAV BUTTONS */
+.home-nav-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.home-btn-nav {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #38bdf8;
+  color: white;
+  cursor: pointer;
+}
+
+/* ================= HERO ================= */
+.home-hero {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: white;
+  text-align: center;
+  padding: 70px 20px;
+}
+
+.home-hero-content h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.home-hero-btn {
+  margin-top: 15px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 10px;
+  background: #0ea5e9;
+  color: white;
+  cursor: pointer;
+}
+
+/* ================= PRODUCTS ================= */
+.home-main {
+  padding: 30px 20px;
+}
+
+.home-products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 16px;
+}
+
+/* PRODUCT CARD */
+.home-product-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.home-product-card:hover {
+  transform: translateY(-5px);
+}
+
+.home-product-image {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.home-product-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.home-product-price {
+  margin-bottom: 10px;
+}
+
+/* CARD BUTTONS */
+.home-product-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.home-btn {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.home-btn-view {
+  background: #38bdf8;
+  color: white;
+}
+
+.home-btn-cart {
+  background: #0ea5e9;
+  color: white;
+}
+
+/* ================= FOOTER ================= */
+.home-footer {
+  text-align: center;
+  padding: 20px;
+  background: #0f172a;
+  color: #94a3b8;
+  margin-top: 40px;
+}
