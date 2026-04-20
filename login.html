@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Store - Login</title>
+
+  <link rel="stylesheet" href="login.css" />
+</head>
+
+<body>
+
+  <!-- 🌊 BACKGROUND -->
+  <section class="bg-layer"></section>
+
+  <!-- 🏷️ LOGO -->
+  <header class="top-logo">
+    <h1 class="logo-text">Store</h1>
+  </header>
+
+  <!-- 🔐 AUTH CONTAINER -->
+  <main class="auth-wrapper">
+
+    <!-- LOGIN -->
+    <section id="login-box" class="auth-box">
+
+      <h2>Login</h2>
+
+      <input type="email" id="login-email" placeholder="Email" class="input" />
+      <input type="password" id="login-password" placeholder="Password" class="input" />
+
+      <button id="login-btn" class="btn">Login</button>
+
+      <p class="switch">
+        Don’t have an account?
+        <span id="to-signup">Sign Up</span>
+      </p>
+
+    </section>
+
+    <!-- SIGNUP -->
+    <section id="signup-box" class="auth-box hidden">
+
+      <h2>Sign Up</h2>
+
+      <input type="email" id="signup-email" placeholder="Email" class="input" />
+      <input type="password" id="signup-password" placeholder="Password" class="input" />
+
+      <button id="signup-btn" class="btn">Create Account</button>
+
+      <p class="switch">
+        Already have an account?
+        <span id="to-login">Login</span>
+      </p>
+
+    </section>
+
+  </main>
+
+  <!-- 🔄 LOADING OVERLAY -->
+  <div id="loading" class="loading hidden">
+    <div class="spinner">Loading...</div>
+  </div>
+
+  <script type="module" src="login.js"></script>
+</body>
+</html>
