@@ -91,9 +91,9 @@ export function checkAuthState() {
       console.log("User role:", role);
 
       if (role === "admin") {
-        window.location.href = "/admin.html";
+        window.location.href = "./admin.html";
       } else {
-        window.location.href = "/home.html";
+        window.location.href = "./home.html";
       }
 
     } catch (err) {
