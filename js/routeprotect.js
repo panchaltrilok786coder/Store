@@ -4,33 +4,44 @@ import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-
 
 /**
  * Protect page based on allowed roles
- * @param {Array} allowedRoles - ["admin"] or ["customer"]
  */
 export function protectRoute(allowedRoles) {
 
   onAuthStateChanged(auth, async (user) => {
 
-    // ❌ Not logged in
-    if (!user) {
-      window.location.href = "/login.html";
-      return;
-    }
+    try {
 
-    // Get user role
-    const userSnap = await getDoc(doc(db, "users", user.uid));
+      // ❌ Not logged in
+      if (!user) {
+        window.location.href = "/login.html";
+        return;
+      }
 
-    if (!userSnap.exists()) {
-      window.location.href = "/login.html";
-      return;
-    }
+      // Get user role
+      const userSnap = await getDoc(doc(db, "users", user.uid));
 
-    const role = userSnap.data().role;
+      if (!userSnap.exists()) {
+        window.location.href = "/login.html";
+        return;
+      }
 
-    console.log("Route check role:", role);
+      const role = userSnap.data().role;
 
-    // ❌ Role not allowed
-    if (!allowedRoles.includes(role)) {
-      alert("Access denied!");
+      console.log("Route check role:", role);
+
+      // ❌ Role not allowed
+      if (!allowedRoles.includes(role)) {
+        alert("Access denied!");
+        window.location.href = "/login.html";
+        return;
+      }
+
+      // ✅ SUCCESS CASE (IMPORTANT FIX)
+      // Allow page to render properly
+      document.body.style.visibility = "visible";
+
+    } catch (err) {
+      console.error("Route protect error:", err);
       window.location.href = "/login.html";
     }
 
