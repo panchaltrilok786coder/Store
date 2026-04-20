@@ -67,10 +67,7 @@ body {
   text-align: center;
 }
 
-/* hide toggle */
-.hidden {
-  display: none;
-}
+
 
 /* =========================
    INPUTS
@@ -126,6 +123,11 @@ body {
   align-items: center;
   backdrop-filter: blur(10px);
   z-index: 10;
+}
+
+/* hide toggle */
+.hidden {
+  display: none;
 }
 
 .spinner {
