@@ -1,0 +1,133 @@
+/* =========================
+   RESET
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Poppins, sans-serif;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top, #0ea5e9, #0f172a);
+  overflow: hidden;
+  color: white;
+}
+
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 20% 30%, rgba(56,189,248,0.3), transparent),
+              radial-gradient(circle at 80% 40%, rgba(14,165,233,0.2), transparent);
+  z-index: -1;
+}
+
+/* =========================
+   LOGO
+========================= */
+.top-logo {
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  text-align: center;
+}
+
+.logo-text {
+  font-size: 52px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #38bdf8, #0ea5e9, #f43f5e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 3px;
+}
+
+/* =========================
+   AUTH WRAPPER
+========================= */
+.auth-wrapper {
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
+}
+
+/* glass box */
+.auth-box {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(15px);
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 30px;
+  text-align: center;
+}
+
+/* hide toggle */
+.hidden {
+  display: none;
+}
+
+/* =========================
+   INPUTS
+========================= */
+.input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.3);
+  color: white;
+}
+
+/* =========================
+   BUTTON
+========================= */
+.btn {
+  width: 100%;
+  margin-top: 18px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #38bdf8, #0ea5e9);
+  color: white;
+  font-weight: 600;
+}
+
+/* =========================
+   SWITCH TEXT
+========================= */
+.switch {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #cbd5e1;
+}
+
+.switch span {
+  color: #38bdf8;
+  cursor: pointer;
+}
+
+/* =========================
+   LOADING SCREEN
+========================= */
+.loading {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+.spinner {
+  font-size: 20px;
+}
