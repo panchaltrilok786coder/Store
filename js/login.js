@@ -1,133 +1,68 @@
-/* =========================
-   RESET
-========================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Poppins, sans-serif;
-}
+import { login, signup } from "./auth.js";
 
-/* =========================
-   BACKGROUND
-========================= */
-body {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: radial-gradient(circle at top, #0ea5e9, #0f172a);
-  overflow: hidden;
-  color: white;
-}
+// =========================
+// ELEMENTS
+// =========================
+const loginBox = document.getElementById("login-box");
+const signupBox = document.getElementById("signup-box");
 
-.bg-layer {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at 20% 30%, rgba(56,189,248,0.3), transparent),
-              radial-gradient(circle at 80% 40%, rgba(14,165,233,0.2), transparent);
-  z-index: -1;
-}
+const toSignup = document.getElementById("to-signup");
+const toLogin = document.getElementById("to-login");
 
-/* =========================
-   LOGO
-========================= */
-.top-logo {
-  position: absolute;
-  top: 40px;
-  width: 100%;
-  text-align: center;
-}
+const loginEmail = document.getElementById("login-email");
+const loginPassword = document.getElementById("login-password");
 
-.logo-text {
-  font-size: 52px;
-  font-weight: 700;
-  background: linear-gradient(90deg, #38bdf8, #0ea5e9, #f43f5e);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: 3px;
-}
+const signupEmail = document.getElementById("signup-email");
+const signupPassword = document.getElementById("signup-password");
 
-/* =========================
-   AUTH WRAPPER
-========================= */
-.auth-wrapper {
-  width: 100%;
-  max-width: 420px;
-  padding: 20px;
-}
+const loginBtn = document.getElementById("login-btn");
+const signupBtn = document.getElementById("signup-btn");
 
-/* glass box */
-.auth-box {
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(15px);
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,0.15);
-  padding: 30px;
-  text-align: center;
-}
+const loading = document.getElementById("loading");
 
-/* hide toggle */
-.hidden {
-  display: none;
-}
+// =========================
+// TOGGLE UI
+// =========================
+toSignup.addEventListener("click", () => {
+  loginBox.classList.add("hidden");
+  signupBox.classList.remove("hidden");
+});
 
-/* =========================
-   INPUTS
-========================= */
-.input {
-  width: 100%;
-  padding: 12px;
-  margin-top: 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.2);
-  background: rgba(0,0,0,0.3);
-  color: white;
-}
+toLogin.addEventListener("click", () => {
+  signupBox.classList.add("hidden");
+  loginBox.classList.remove("hidden");
+});
 
-/* =========================
-   BUTTON
-========================= */
-.btn {
-  width: 100%;
-  margin-top: 18px;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  background: linear-gradient(90deg, #38bdf8, #0ea5e9);
-  color: white;
-  font-weight: 600;
-}
+// =========================
+// LOGIN
+// =========================
+loginBtn.addEventListener("click", async () => {
+  loading.classList.remove("hidden");
 
-/* =========================
-   SWITCH TEXT
-========================= */
-.switch {
-  margin-top: 15px;
-  font-size: 14px;
-  color: #cbd5e1;
-}
+  const result = await login(loginEmail.value, loginPassword.value);
 
-.switch span {
-  color: #38bdf8;
-  cursor: pointer;
-}
+  if (!result.success) {
+    loading.classList.add("hidden");
+    alert(result.error);
+  }
+  // success → routeprotect handles redirect
+});
 
-/* =========================
-   LOADING SCREEN
-========================= */
-.loading {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(10px);
-  z-index: 10;
-}
+// =========================
+// SIGNUP
+// =========================
+signupBtn.addEventListener("click", async () => {
+  loading.classList.remove("hidden");
 
-.spinner {
-  font-size: 20px;
-}
+  const result = await signup(signupEmail.value, signupPassword.value);
+
+  if (!result.success) {
+    loading.classList.add("hidden");
+    alert(result.error);
+  } else {
+    alert("Account created. Please login.");
+    loading.classList.add("hidden");
+    signupBox.classList.add("hidden");
+    loginBox.classList.remove("hidden");
+  }
+});
