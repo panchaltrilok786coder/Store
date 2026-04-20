@@ -1,7 +1,7 @@
 // =========================
 // IMPORTS
 // =========================
-import { db, storage } from "./firebase.js";
+import { db } from "./firebase.js";
 import { protectRoute } from "./routeprotect.js";
 import { auth } from "./firebase.js";
 import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -13,13 +13,6 @@ import {
   deleteDoc,
   doc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
 // =========================
 // PROTECT ADMIN ROUTE
@@ -43,21 +36,17 @@ form.addEventListener("submit", async (e) => {
 
   const name = nameInput.value.trim();
   const price = Number(priceInput.value);
-  const file = imageInput.files[0];
+  const imageURL = imageInput.value.trim(); // ✅ now string input
 
-  if (!name || !price || !file) {
+  if (!name || !price || !imageURL) {
     alert("Please fill all fields");
     return;
   }
 
   try {
-    // Upload image to Firebase Storage
-    const storageRef = ref(storage, `products/${Date.now()}-${file.name}`);
-    await uploadBytes(storageRef, file);
 
-    const imageURL = await getDownloadURL(storageRef);
+    console.log("ADDING PRODUCT...");
 
-    // Save product in Firestore
     await addDoc(collection(db, "products"), {
       name,
       price,
@@ -65,13 +54,15 @@ form.addEventListener("submit", async (e) => {
       createdAt: new Date()
     });
 
+    console.log("PRODUCT ADDED");
+
     alert("Product added!");
 
     form.reset();
     loadProducts();
 
   } catch (err) {
-    console.error("Error adding product:", err.message);
+    console.error("FULL ERROR:", err);
   }
 });
 
@@ -104,7 +95,7 @@ async function loadProducts() {
     });
 
   } catch (err) {
-    console.error("Error loading products:", err.message);
+    console.error("Error loading products:", err);
   }
 }
 
@@ -120,7 +111,7 @@ productList.addEventListener("click", async (e) => {
       alert("Product deleted!");
       loadProducts();
     } catch (err) {
-      console.error("Delete error:", err.message);
+      console.error("Delete error:", err);
     }
   }
 });
@@ -128,16 +119,11 @@ productList.addEventListener("click", async (e) => {
 // =========================
 // LOGOUT
 // =========================
-
 const logoutBtn = document.getElementById("admin-logout-btn");
 
 logoutBtn.addEventListener("click", async () => {
-  try {
-    await signOut(auth);
-    window.location.href = "./login.html";
-  } catch (err) {
-    console.error("Logout error:", err.message);
-  }
+  await signOut(auth);
+  window.location.href = "./login.html";
 });
 
 // =========================
