@@ -13,7 +13,7 @@ export function protectRoute(allowedRoles) {
 
       // ❌ Not logged in
       if (!user) {
-        window.location.href = "/login.html";
+        window.location.href = "./login.html";
         return;
       }
 
@@ -21,7 +21,7 @@ export function protectRoute(allowedRoles) {
       const userSnap = await getDoc(doc(db, "users", user.uid));
 
       if (!userSnap.exists()) {
-        window.location.href = "/login.html";
+        window.location.href = "./login.html";
         return;
       }
 
@@ -32,7 +32,7 @@ export function protectRoute(allowedRoles) {
       // ❌ Role not allowed
       if (!allowedRoles.includes(role)) {
         alert("Access denied!");
-        window.location.href = "/login.html";
+        window.location.href = "./login.html";
         return;
       }
 
@@ -42,7 +42,7 @@ export function protectRoute(allowedRoles) {
 
     } catch (err) {
       console.error("Route protect error:", err);
-      window.location.href = "/login.html";
+      window.location.href = "./login.html";
     }
 
   });
