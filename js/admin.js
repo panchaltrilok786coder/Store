@@ -3,6 +3,8 @@
 // =========================
 import { db, storage } from "./firebase.js";
 import { protectRoute } from "./routeprotect.js";
+import { auth } from "./firebase.js";
+import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 import {
   collection,
@@ -121,6 +123,17 @@ productList.addEventListener("click", async (e) => {
       console.error("Delete error:", err.message);
     }
   }
+});
+
+// =========================
+// LOGOUT
+// =========================
+
+const logoutBtn = document.getElementById("admin-logout-btn");
+
+logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
+  window.location.href = "/login.html";
 });
 
 // =========================
