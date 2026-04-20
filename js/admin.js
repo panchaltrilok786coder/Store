@@ -134,7 +134,7 @@ const logoutBtn = document.getElementById("admin-logout-btn");
 logoutBtn.addEventListener("click", async () => {
   try {
     await signOut(auth);
-    window.location.href = "Store/login.html";
+    window.location.href = "/login.html";
   } catch (err) {
     console.error("Logout error:", err.message);
   }
