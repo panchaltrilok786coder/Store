@@ -1,13 +1,11 @@
 import { auth, db } from "./firebase.js";
 
-// Auth functions
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// Firestore functions
 import {
   setDoc,
   doc,
@@ -20,21 +18,26 @@ import {
 // =======================
 export async function signup(email, password) {
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
-    // Save user data in Firestore
     await setDoc(doc(db, "users", user.uid), {
       email: user.email,
-      role: "customer", // default role
+      role: "customer",
       createdAt: new Date()
     });
 
-    console.log("User signed up:", user);
+    console.log("Signup success:", user.uid);
+
+    // ✅ IMPORTANT FIX
+    return { success: true, user };
 
   } catch (error) {
     console.error("Signup Error:", error.message);
+
+    // ✅ IMPORTANT FIX
+    return { success: false, error: error.message };
   }
 }
 
@@ -44,54 +47,57 @@ export async function signup(email, password) {
 // =======================
 export async function login(email, password) {
   try {
+
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-    console.log("User logged in:", userCredential.user);
+    console.log("Login success:", userCredential.user.uid);
+
+    // ✅ IMPORTANT FIX
+    return { success: true, user: userCredential.user };
 
   } catch (error) {
     console.error("Login Error:", error.message);
+
+    // ✅ IMPORTANT FIX
+    return { success: false, error: error.message };
   }
 }
 
 
 // =======================
-// 🔁 AUTH STATE LISTENER (REAL-TIME)
+// 🔁 AUTH STATE LISTENER
 // =======================
 export function checkAuthState() {
 
   onAuthStateChanged(auth, async (user) => {
 
-    if (user) {
-      console.log("User is logged in:", user.uid);
+    if (!user) {
+      console.log("No user logged in");
+      return;
+    }
 
-      try {
-        // Get user role from Firestore
-        const userRef = doc(db, "users", user.uid);
-        const userSnap = await getDoc(userRef);
+    try {
 
-        if (userSnap.exists()) {
-          const userData = userSnap.data();
-          const role = userData.role;
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
 
-          console.log("User role:", role);
-
-          // 🔀 Redirect based on role
-          if (role === "admin") {
-            window.location.href = "/admin/admin.html";
-          } else {
-            window.location.href = "/customer/home.html";
-          }
-
-        } else {
-          console.error("User document not found");
-        }
-
-      } catch (err) {
-        console.error("Error fetching user role:", err.message);
+      if (!userSnap.exists()) {
+        console.error("User document not found");
+        return;
       }
 
-    } else {
-      console.log("No user logged in");
+      const role = userSnap.data().role;
+
+      console.log("User role:", role);
+
+      if (role === "admin") {
+        window.location.href = "/admin/admin.html";
+      } else {
+        window.location.href = "/customer/home.html";
+      }
+
+    } catch (err) {
+      console.error("Error fetching role:", err.message);
     }
 
   });
