@@ -1,5 +1,5 @@
 import { login, signup } from "./auth.js";
-
+import {checkAuthState} from "./auth.js";
 // =========================
 // ELEMENTS
 // =========================
@@ -46,6 +46,7 @@ loginBtn.addEventListener("click", async () => {
     alert(result.error);
   }
   // success → routeprotect handles redirect
+  checkAuthState();
 });
 
 // =========================
