@@ -127,6 +127,15 @@ body {
   transition: 0.3s;
 }
 
+.delete-btn {
+  padding: 20px 10px;
+  border-radius: 5px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  color: white;
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+}
+
 .admin-card:hover {
   transform: translateY(-5px);
 }
