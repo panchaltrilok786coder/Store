@@ -128,7 +128,7 @@ body {
 }
 
 .delete-btn {
-  padding: 20px 10px;
+  padding: 10px 15px;
   border-radius: 5px;
   background: linear-gradient(90deg, var(--accent), var(--accent2));
   color: white;
