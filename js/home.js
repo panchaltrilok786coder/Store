@@ -59,6 +59,16 @@ function renderProducts(products) {
   });
 }
 
+
+// ========================= LOGOUT =========================
+const logoutBtn = document.getElementById("home-logout-btn");
+
+logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
+  window.location.href = "./login.html";
+});
+
+
 // ================= SEARCH =================
 searchInput.addEventListener("input", (e) => {
   const value = e.target.value.toLowerCase();
