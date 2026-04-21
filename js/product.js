@@ -62,7 +62,7 @@ async function loadRelated() {
     const data = docSnap.data();
 
     const card = document.createElement("div");
-    card.className = "related-card";
+    card.className = "product-product-card";
      
   card.innerHTML = `
     <img class="product-product-image" src="${data.imageURL || "https://via.placeholder.com/300"}" />
