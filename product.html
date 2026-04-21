@@ -15,20 +15,35 @@
 
 <body>
 
+  
   <!-- ================= NAVBAR ================= -->
-  <header class="product-navbar">
+ <header class="home-navbar">
 
-    <h1 class="product-logo">STORE</h1>
+  <!-- ROW 1: LOGO -->
+  <div class="home-navbar-top">
+    <h1 class="home-logo">STORE</h1>
+  </div>
 
-    <input type="text" id="product-search" placeholder="Search..." />
+  <!-- ROW 2: SEARCH + ACTIONS -->
+  <div class="home-navbar-bottom">
 
-    <nav class="product-nav-actions">
-      <button id="home-btn">Home</button>
-      <button id="cart-btn">Cart</button>
-      <button id="logout-btn">Logout</button>
-    </nav>
+    <input
+      type="text"
+      id="home-search-input"
+      class="home-search-input"
+      placeholder="Search products..."
+    />
 
-  </header>
+    <div class="home-nav-actions">
+      <button id="home-cart-btn" class="home-btn-nav">Cart</button>
+      <button id="home-orders-btn"  class="home-btn-nav">Orders</button>
+      <button id="home-logout-btn" class="home-btn-nav">Logout</button>
+    </div>
+
+  </div>
+
+</header>
+
 
   <!-- ================= PRODUCT DETAILS ================= -->
   <main class="product-main">
