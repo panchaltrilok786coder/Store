@@ -125,10 +125,12 @@ body {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 6px;
+  text-wrap:wrap;
 }
 
 .home-product-price {
   margin-bottom: 10px;
+  text-wrap:wrap;
 }
 
 /* CARD BUTTONS */
