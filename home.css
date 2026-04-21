@@ -14,39 +14,53 @@ body {
 /* ================= NAVBAR ================= */
 .home-navbar {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 24px;
+  flex-direction: column;
+  padding: 12px;
 
   background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(12px);
 }
 
+/* TOP ROW */
+.home-navbar-top {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
 .home-logo {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 800;
   background: linear-gradient(90deg, #38bdf8, #0ea5e9, #a78bfa);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
+/* BOTTOM ROW */
+.home-navbar-bottom {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
 /* SEARCH */
 .home-search-input {
-  padding: 10px 14px;
+  flex: 1;
+  padding: 10px;
   border-radius: 10px;
   border: none;
   outline: none;
-  width: 220px;
 }
 
-/* NAV BUTTONS */
+/* BUTTONS */
 .home-nav-actions {
   display: flex;
-  gap: 10px;
+  gap: 6px;
 }
 
 .home-btn-nav {
-  padding: 8px 12px;
+  padding: 8px 10px;
+  font-size: 12px;
   border: none;
   border-radius: 8px;
   background: #38bdf8;
