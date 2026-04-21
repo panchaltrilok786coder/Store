@@ -86,6 +86,29 @@ async function loadRelated() {
 }
 
 
+// ================= CARD ACTIONS =================
+relatedGrid.addEventListener("click", (e) => {
+
+  const id = e.target.dataset.id;
+
+  // VIEW PRODUCT
+  if (e.target.classList.contains("home-btn-view")) {
+    // redirect to product page
+    window.location.href = `./product.html?id=${id}`;
+  }
+
+  // ADD TO CART (placeholder)
+  if (e.target.classList.contains("home-btn-cart")) {
+    console.log("Add to cart:", id);
+
+    // later → Firestore or localStorage
+    alert("Added to cart (feature coming soon)");
+  }
+
+});
+
+
+
 // ================= NAV BUTTONS =================
 document.getElementById("home-btn").onclick = () => {
   window.location.href = "./home.html";
