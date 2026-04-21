@@ -18,30 +18,32 @@
 <body>
 
   <!-- ================= NAVBAR ================= -->
-  <header class="home-navbar">
+ <header class="home-navbar">
 
-    <div class="home-logo-section">
-      <h1 class="home-logo">STORE</h1>
+  <!-- ROW 1: LOGO -->
+  <div class="home-navbar-top">
+    <h1 class="home-logo">STORE</h1>
+  </div>
+
+  <!-- ROW 2: SEARCH + ACTIONS -->
+  <div class="home-navbar-bottom">
+
+    <input
+      type="text"
+      id="home-search-input"
+      class="home-search-input"
+      placeholder="Search products..."
+    />
+
+    <div class="home-nav-actions">
+      <button id="home-cart-btn" class="home-btn-nav">Cart</button>
+      <button id="home-orders-btn" class="home-btn-nav">Orders</button>
+      <button id="home-logout-btn" class="home-btn-nav">Logout</button>
     </div>
 
-    <nav class="home-nav">
+  </div>
 
-      <input
-        type="text"
-        id="home-search-input"
-        class="home-search-input"
-        placeholder="Search products..."
-      />
-
-      <div class="home-nav-actions">
-        <button id="home-cart-btn" class="home-btn-nav">Cart</button>
-        <button id="home-orders-btn" class="home-btn-nav">Orders</button>
-        <button id="home-logout-btn" class="home-btn-nav">Logout</button>
-      </div>
-
-    </nav>
-
-  </header>
+</header>
 
   <!-- ================= HERO ================= -->
   <section class="home-hero">
