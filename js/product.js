@@ -63,12 +63,23 @@ async function loadRelated() {
 
     const card = document.createElement("div");
     card.className = "related-card";
+     
+  card.innerHTML = `
+    <img class="product-product-image" src="${data.imageURL || "https://via.placeholder.com/300"}" />
+    
+    <h3 class="product-product-title">${data.name}</h3>
+    
+    <p class="product-product-price">₹${data.price}</p>
 
-    card.innerHTML = `
-      <h4>${data.name}</h4>
-      <p>₹${data.price}</p>
-    `;
-
+    <div class="product-product-actions">
+       <button class="product-btn product-btn-cart" data-id="${id}">
+        View
+      </button>
+      <button class="product-btn product-btn-cart" data-id="${id}">
+        Add
+      </button>
+    </div>
+  `;
     relatedGrid.appendChild(card);
   });
 
