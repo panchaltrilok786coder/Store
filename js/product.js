@@ -92,13 +92,13 @@ relatedGrid.addEventListener("click", (e) => {
   const id = e.target.dataset.id;
 
   // VIEW PRODUCT
-  if (e.target.classList.contains("home-btn-view")) {
+  if (e.target.classList.contains("product-btn-view")) {
     // redirect to product page
     window.location.href = `./product.html?id=${id}`;
   }
 
   // ADD TO CART (placeholder)
-  if (e.target.classList.contains("home-btn-cart")) {
+  if (e.target.classList.contains("product-btn-cart")) {
     console.log("Add to cart:", id);
 
     // later → Firestore or localStorage
