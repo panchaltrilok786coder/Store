@@ -72,10 +72,10 @@ async function loadRelated() {
     <p class="product-product-price">₹${data.price}</p>
 
     <div class="product-product-actions">
-       <button class="product-btn product-btn-cart" data-id="${id}">
+       <button class="product-btn product-btn-cart" data-id="${docSnap.id}">
         View
       </button>
-      <button class="product-btn product-btn-cart" data-id="${id}">
+      <button class="product-btn product-btn-cart" data-id="${docSnap.id}">
         Add
       </button>
     </div>
