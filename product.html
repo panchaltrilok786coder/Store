@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description" content="Store Product Details Page" />
+
+  <title>Product - Store</title>
+
+  <link rel="stylesheet" href="product.css" />
+  <script type="module" src="js/product.js" defer></script>
+</head>
+
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="product-navbar">
+
+    <h1 class="product-logo">STORE</h1>
+
+    <input type="text" id="product-search" placeholder="Search..." />
+
+    <nav class="product-nav-actions">
+      <button id="home-btn">Home</button>
+      <button id="cart-btn">Cart</button>
+      <button id="logout-btn">Logout</button>
+    </nav>
+
+  </header>
+
+  <!-- ================= PRODUCT DETAILS ================= -->
+  <main class="product-main">
+
+    <section class="product-details-card">
+
+      <img id="product-image" />
+
+      <div class="product-info">
+
+        <h2 id="product-name"></h2>
+
+        <p id="product-price"></p>
+
+        <p id="product-description">
+          No description available
+        </p>
+
+        <button id="add-to-cart-btn">Add to Cart</button>
+
+      </div>
+
+    </section>
+
+    <!-- ================= RELATED PRODUCTS ================= -->
+    <section class="related-section">
+
+      <h3>Related Products</h3>
+
+      <div id="related-products" class="related-grid"></div>
+
+    </section>
+
+  </main>
+
+</body>
+
+</html>
