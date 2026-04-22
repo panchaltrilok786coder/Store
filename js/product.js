@@ -1,6 +1,6 @@
 import { db, auth } from "./firebase.js";
 import { protectRoute } from "./routeprotect.js";
-import { addToCart } from "./cart.js";
+import { addToCart } from "./cartService.js";
 import {
   doc,
   getDoc,
