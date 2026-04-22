@@ -103,23 +103,33 @@ searchInput.addEventListener("input", (e) => {
 // ================= CARD ACTIONS =================
 grid.addEventListener("click", (e) => {
 
-  const id = e.target.dataset.id;
+  const button = e.target.closest("button");
+  if (!button) return;
+
+  const id = button.dataset.id;
 
   // VIEW PRODUCT
-  if (e.target.classList.contains("home-btn-view")) {
-    // redirect to product page
+  if (button.classList.contains("home-btn-view")) {
     window.location.href = `./product.html?id=${id}`;
   }
 
-  // ADD TO CART (placeholder)
-  if (e.target.classList.contains("home-btn-cart")) {
+  // ADD TO CART
+  if (button.classList.contains("home-btn-cart")) {
+
     const product = allProducts.find(p => p.id === id);
+
+    if (!product) {
+      alert("Product not found");
+      return;
+    }
+
     addToCart({
-    id: product.id,
-    name: product.name,
-    price: product.price,
-    imageURL: product.imageURL
-  });
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      imageURL: product.imageURL
+    });
+
     alert("Added to cart");
   }
 
