@@ -7,6 +7,7 @@ import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth
 import {
   collection,
   getDocs
+  getDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 
@@ -113,6 +114,9 @@ grid.addEventListener("click", (e) => {
 
   // ADD TO CART (placeholder)
   if (e.target.classList.contains("home-btn-cart")) {
+    try{
+    const docRef = doc(db, "products", id);
+    const product = await getDoc(doc)
     addToCart({
     id: productId,
     name: nameEl.innerText,
@@ -120,6 +124,9 @@ grid.addEventListener("click", (e) => {
     imageURL: imageEl.src
   });
     alert("Added to cart");
+  } catch {
+    alert("Failed adding to cart");
+  }
   }
 
 });
