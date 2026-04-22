@@ -52,6 +52,7 @@ function createProductCard(product, id) {
 
 // ================= LOAD PRODUCTS =================
 async function loadProducts() {
+  alert("loadProducts working ie homejs running")
   grid.innerHTML = "Loading...";
 
   try {
