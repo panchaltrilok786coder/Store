@@ -98,11 +98,14 @@ relatedGrid.addEventListener("click", (e) => {
   }
 
   // ADD TO CART (placeholder)
-  if (e.target.classList.contains("product-btn-cart")) {
-    console.log("Add to cart:", id);
-
-    // later → Firestore or localStorage
-    alert("Added to cart (feature coming soon)");
+  if (e.target.classList.contains("home-btn-cart")) {
+    addToCart({
+    id: productId,
+    name: nameEl.innerText,
+    price: Number(priceEl.innerText.replace("₹", "")),
+    imageURL: imageEl.src
+  });
+    alert("Added to cart");
   }
 
 });
