@@ -136,6 +136,10 @@ logoutBtn.addEventListener("click", async () => {
   }
 });
 
+//=================== Navbar ===================
+document.getElementById("cart-btn").onclick = () => {
+  window.location.href = "./cart.html";
+};
 
 // ================= INIT =================
 loadProducts();
