@@ -9,7 +9,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // ADD
-export async function addToCart(product) {
+export async function addToCart(product, str) {
+  alert(str);
   const user = auth.currentUser;
   if (!user) return alert("Login required");
 
