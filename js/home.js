@@ -115,13 +115,13 @@ grid.addEventListener("click", (e) => {
   // ADD TO CART (placeholder)
   if (e.target.classList.contains("home-btn-cart")) {
     try{
-    const docRef = doc(db, "products", id);
-    const product = await getDoc(doc)
+    const docRef = await getDoc(doc(db, "products", id));
+    const product = docRef.data();
     addToCart({
-    id: productId,
-    name: nameEl.innerText,
-    price: Number(priceEl.innerText.replace("₹", "")),
-    imageURL: imageEl.src
+    id: docRef.id,
+    name: product.name,
+    price: product.price,
+    imageURL: product.imageURL
   });
     alert("Added to cart");
   } catch {
