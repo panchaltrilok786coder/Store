@@ -98,7 +98,7 @@ relatedGrid.addEventListener("click", (e) => {
   }
 
   // ADD TO CART (placeholder)
-  if (e.target.classList.contains("home-btn-cart")) {
+  if (e.target.classList.contains("product-btn-cart")) {
     addToCart({
     id: productId,
     name: nameEl.innerText,
