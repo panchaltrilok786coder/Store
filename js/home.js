@@ -102,7 +102,7 @@ searchInput.addEventListener("input", (e) => {
 
 
 // ================= CARD ACTIONS =================
-grid.addEventListener("click", (e) => {
+grid.addEventListener("click", async (e) => {
 
   const id = e.target.dataset.id;
 
