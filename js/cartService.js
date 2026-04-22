@@ -15,6 +15,7 @@ import {
 
 // ADD
 export async function addToCart(product) {
+  alert("ADD TO CART FUNCTION INSIDE :)")
   return new Promise((resolve, reject) => {
 
     onAuthStateChanged(auth, async (user) => {
