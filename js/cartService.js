@@ -15,37 +15,35 @@ import {
 
 // ADD
 export async function addToCart(product) {
-  alert("ADD TO CART FUNCTION INSIDE :)");
-  return new Promise((resolve, reject) => {
 
-    onAuthStateChanged(auth, async (user) => {
+  alert("INSIDE addToCart");
 
-      if (!user) {
-        alert("Login required");
-        reject("No user");
-        return;
-      }
+  const user = auth.currentUser;
 
-      try {
-        const ref = doc(db, "users", user.uid, "cart", product.id);
+  alert("USER: " + (user ? user.uid : "NULL"));
 
-        await setDoc(ref, {
-          ...product,
-          quantity: 1
-        });
+  if (!user) {
+    alert("Login required");
+    return;
+  }
 
-        resolve();
+  try {
 
-      } catch (err) {
-        console.error(err);
-        reject(err);
-      }
+    alert("WRITING TO FIRESTORE");
 
+    const ref = doc(db, "users", user.uid, "cart", product.id);
+
+    await setDoc(ref, {
+      ...product,
+      quantity: 1
     });
 
-  });
-}
+    alert("WRITE SUCCESS");
 
+  } catch (err) {
+    alert("ERROR: " + err.message);
+  }
+}
 
 // GET
 export async function getCart() {
