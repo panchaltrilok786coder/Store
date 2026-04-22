@@ -51,23 +51,37 @@
 
     <section class="product-details-card">
 
-      <img id="product-image" />
+  <!-- IMAGE -->
+  <div class="product-image-wrapper">
+    <img id="product-image" alt="Product Image" />
+  </div>
 
-      <div class="product-info">
+  <!-- INFO -->
+  <article class="product-info">
 
-        <h2 id="product-name"></h2>
+    <header class="product-header">
+      <h1 id="product-name" class="product-title"></h1>
+      <p id="product-price" class="product-price"></p>
+    </header>
 
-        <p id="product-price"></p>
-
-        <p id="product-description">
-          No description available
-        </p>
-
-        <button id="add-to-cart-btn">Add to Cart</button>
-
-      </div>
-
+    <section class="product-description">
+      <p id="product-description-text">
+        No description available
+      </p>
     </section>
+
+    <footer class="product-actions">
+      <button id="add-to-cart-btn" class="product-btn product-btn-primary">
+        Add to Cart
+      </button>
+      <button class="product-btn product-btn-secondary">
+        Buy Now
+      </button>
+    </footer>
+
+  </article>
+
+</section>
 
     <!-- ================= RELATED PRODUCTS ================= -->
     <section class="related-section">
