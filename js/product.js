@@ -100,10 +100,10 @@ relatedGrid.addEventListener("click", (e) => {
   // ADD TO CART (placeholder)
   if (e.target.classList.contains("product-btn-cart")) {
     addToCart({
-    id: "Hi",
-    name: "Hello",
-    price: 555,
-    imageURL: "Hello"
+    id: productId,
+    name: nameEl.innerText,
+    price: Number(priceEl.innerText.replace("₹", "")),
+    imageURL: imageEl.src
   });
     alert("Added to cart");
   }
