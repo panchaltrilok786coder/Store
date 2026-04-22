@@ -7,7 +7,6 @@ import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth
 import {
   collection,
   getDocs
-  getDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 
@@ -102,7 +101,7 @@ searchInput.addEventListener("input", (e) => {
 
 
 // ================= CARD ACTIONS =================
-grid.addEventListener("click", async (e) => {
+grid.addEventListener("click", (e) => {
 
   const id = e.target.dataset.id;
 
@@ -114,19 +113,14 @@ grid.addEventListener("click", async (e) => {
 
   // ADD TO CART (placeholder)
   if (e.target.classList.contains("home-btn-cart")) {
-    try{
-    const docRef = await getDoc(doc(db, "products", id));
-    const product = docRef.data();
+    const product = allProducts.find(p => p.id === id);
     addToCart({
-    id: docRef.id,
+    id: product.id,
     name: product.name,
     price: product.price,
     imageURL: product.imageURL
   });
     alert("Added to cart");
-  } catch {
-    alert("Failed adding to cart");
-  }
   }
 
 });
