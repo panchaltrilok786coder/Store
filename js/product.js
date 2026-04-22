@@ -105,7 +105,7 @@ relatedGrid.addEventListener("click", (e) => {
     price: Number(priceEl.innerText.replace("₹", "")),
     imageURL: imageEl.src
   });
-    alert("Added to cart", productId,nameEl.innerText,Number(priceEl.innerText.replace("₹", "")),imageEl.src);
+    alert("Added to carto", productId,nameEl.innerText,Number(priceEl.innerText.replace("₹", "")),imageEl.src);
   }
 
 });
