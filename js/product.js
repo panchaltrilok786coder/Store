@@ -117,6 +117,10 @@ document.getElementById("home-btn").onclick = () => {
   window.location.href = "./home.html";
 };
 
+document.getElementById("cart-btn").onclick = () => {
+  window.location.href = "./cart.html";
+};
+
 document.getElementById("logout-btn").onclick = async () => {
   await signOut(auth);
   window.location.href = "./login.html";
