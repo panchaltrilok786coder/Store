@@ -1,7 +1,7 @@
 // ================= IMPORTS =================
 import { db, auth } from "./firebase.js";
 import { protectRoute } from "./routeprotect.js";
-
+import { addToCart } from "./cartService.js";
 import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 import {
@@ -113,10 +113,13 @@ grid.addEventListener("click", (e) => {
 
   // ADD TO CART (placeholder)
   if (e.target.classList.contains("home-btn-cart")) {
-    console.log("Add to cart:", id);
-
-    // later → Firestore or localStorage
-    alert("Added to cart (feature coming soon)");
+    addToCart({
+    id: productId,
+    name: nameEl.innerText,
+    price: Number(priceEl.innerText.replace("₹", "")),
+    imageURL: imageEl.src
+  });
+    alert("Added to cart");
   }
 
 });
