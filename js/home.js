@@ -117,6 +117,7 @@ grid.addEventListener("click", (e) => {
   if (button.classList.contains("home-btn-cart")) {
 
     const product = allProducts.find(p => p.id === id);
+    alert("PRODUCT FOUND: " + JSON.stringify(product));
 
     if (!product) {
       alert("Product not found");
