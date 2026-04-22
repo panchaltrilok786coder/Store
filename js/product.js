@@ -113,15 +113,15 @@ relatedGrid.addEventListener("click", (e) => {
 
 
 // ================= NAV BUTTONS =================
-document.getElementById("home-btn").onclick = () => {
+document.getElementById("product-home-btn").onclick = () => {
   window.location.href = "./home.html";
 };
 
-document.getElementById("cart-btn").onclick = () => {
+document.getElementById("product-cart-btn").onclick = () => {
   window.location.href = "./cart.html";
 };
 
-document.getElementById("logout-btn").onclick = async () => {
+document.getElementById("product-logout-btn").onclick = async () => {
   await signOut(auth);
   window.location.href = "./login.html";
 };
