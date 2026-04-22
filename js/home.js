@@ -138,7 +138,7 @@ logoutBtn.addEventListener("click", async () => {
 });
 
 //=================== Navbar ===================
-document.getElementById("cart-btn").onclick = () => {
+document.getElementById("home-cart-btn").onclick = () => {
   window.location.href = "./cart.html";
 };
 
