@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Checkout - Securely place your order" />
+
+  <title>Checkout - Store</title>
+
+  <link rel="stylesheet" href="checkout.css" />
+  <script type="module" src="js/checkout.js" defer></script>
+</head>
+
+<body>
+
+<header class="checkout-navbar">
+  <h1 class="checkout-logo">STORE</h1>
+</header>
+
+<main class="checkout-main">
+
+  <!-- ORDER SUMMARY -->
+  <section class="checkout-summary">
+    <h2>Order Summary</h2>
+    <div id="checkout-items"></div>
+    <p class="checkout-total">Total: ₹<span id="checkout-total"></span></p>
+  </section>
+
+  <!-- ADDRESS FORM -->
+  <section class="checkout-address">
+    <h2>Delivery Address</h2>
+
+    <form id="checkout-form">
+
+      <label>
+        Full Name
+        <input type="text" id="name" required />
+      </label>
+
+      <label>
+        Phone Number
+        <input type="tel" id="phone" required />
+      </label>
+
+      <label>
+        Address
+        <textarea id="address" required></textarea>
+      </label>
+
+      <button type="submit" class="checkout-btn">
+        Place Order
+      </button>
+
+    </form>
+  </section>
+
+</main>
+
+</body>
+</html>
