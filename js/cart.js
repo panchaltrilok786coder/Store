@@ -32,7 +32,7 @@ document.getElementById("go-home-btn").onclick = () => {
 // LOAD
 async function loadCart() {
   const items = await getCart();
-
+  alert("CART DATA: " + JSON.stringify(items));
   list.innerHTML = "";
 
   if (items.length === 0) {
