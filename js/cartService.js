@@ -47,6 +47,7 @@ export async function addToCart(product) {
 
 // GET
 export async function getCart() {
+  alert("Get cart function called")
   const user = auth.currentUser;
   if (!user) return [];
 
