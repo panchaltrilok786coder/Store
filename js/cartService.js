@@ -12,7 +12,6 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-
 // ADD
 export async function addToCart(product) {
 
@@ -46,23 +45,37 @@ export async function addToCart(product) {
 }
 
 // GET
-export async function getCart() {
-  const user = auth.currentUser;
 
-  alert("USER IN getCart: " + (user ? user.uid : "NULL"));
+export function getCart() {
+  return new Promise((resolve) => {
 
-  if (!user) return [];
+    onAuthStateChanged(auth, async (user) => {
 
-  const snap = await getDocs(collection(db, "users", user.uid, "cart"));
+      if (!user) {
+        alert("User not logged in");
+        resolve([]);
+        return;
+      }
 
-  alert("DOC COUNT: " + snap.docs.length);
+      try {
+        const snap = await getDocs(collection(db, "users", user.uid, "cart"));
 
-  return snap.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  }));
+        const items = snap.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+
+        resolve(items);
+
+      } catch (err) {
+        alert("Error: " + err.message);
+        resolve([]);
+      }
+
+    });
+
+  });
 }
-
 
 // REMOVE
 export async function removeFromCart(id) {
