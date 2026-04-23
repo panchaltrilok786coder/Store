@@ -48,9 +48,14 @@ export async function addToCart(product) {
 // GET
 export async function getCart() {
   const user = auth.currentUser;
+
+  alert("USER IN getCart: " + (user ? user.uid : "NULL"));
+
   if (!user) return [];
 
   const snap = await getDocs(collection(db, "users", user.uid, "cart"));
+
+  alert("DOC COUNT: " + snap.docs.length);
 
   return snap.docs.map(doc => ({
     id: doc.id,
