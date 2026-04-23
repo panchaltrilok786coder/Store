@@ -48,7 +48,6 @@ export async function addToCart(product) {
 // GET
 export async function getCart() {
   const user = auth.currentUser;
-  alert("Get cart function called for user :", user.uid)
   if (!user) return [];
 
   const snap = await getDocs(collection(db, "users", user.uid, "cart"));
