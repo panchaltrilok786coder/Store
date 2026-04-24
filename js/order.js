@@ -1,79 +1,141 @@
 // ================= IMPORTS =================
-// Import firebase db and auth
-// Import route protection
-// Import firestore functions (collection, query, where, getDocs)
-// Import authentication listener (onAuthStateChanged)
+import { db, auth } from "./firebase.js";
+import { protectRoute } from "./routeprotect.js";
+
+import {
+  collection,
+  getDocs,
+  query,
+  where
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+import {
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 
 // ================= ROUTE PROTECTION =================
-// Protect this page so only customers can access it
+protectRoute(["customer"]);
 
 
 // ================= DOM ELEMENTS =================
-// Get reference to:
-// - orders container
-// - navbar buttons (home, cart, logout)
+const orderContainer = document.getElementById("orders-container");
 
 
 // ================= GLOBAL STATE =================
-// Create variable to store all orders
+let allOrders = [];
 
 
-// ================= LOAD ORDERS FUNCTION =================
-// Purpose: Fetch only logged-in user's orders
-// Steps:
-// 1. Get current user
-// 2. If no user → redirect/login alert
-// 3. Query "orders" collection where userId == currentUser.uid
-// 4. Fetch documents
-// 5. Store data in array
-// 6. Call renderOrders()
+// ================= LOAD ORDERS =================
+async function loadOrders(user) {
+
+  try {
+
+    // STEP 1: Query only THIS user's orders
+    const q = query(
+      collection(db, "orders"),
+      where("userId", "==", user.uid)
+    );
+
+    const snapshot = await getDocs(q);
+
+    allOrders = [];
+
+    // STEP 2: Store orders
+    snapshot.forEach((docSnap) => {
+      allOrders.push({
+        id: docSnap.id,
+        ...docSnap.data()
+      });
+    });
+
+    // STEP 3: Render UI
+    renderOrders();
+
+  } catch (err) {
+    alert("Failed to load orders: " + err.message);
+  }
+}
 
 
-// ================= RENDER ORDERS FUNCTION =================
-// Purpose: Display orders in UI
-// Steps:
-// 1. Clear container
-// 2. Loop through orders array
-// 3. For each order:
-//    - Create order card
-//    - Show order ID
-//    - Show items list
-//    - Show total price
-//    - Show status
-// 4. Append to DOM
+// ================= RENDER ORDERS =================
+function renderOrders() {
 
+  orderContainer.innerHTML = "";
 
-// ================= FORMAT ITEMS FUNCTION =================
-// Purpose: Convert items array into readable HTML
-// Steps:
-// - Loop items
-// - Return formatted string or DOM elements
+  if (allOrders.length === 0) {
+    orderContainer.innerHTML = "<p>No orders found</p>";
+    return;
+  }
 
+  allOrders.forEach((order) => {
 
-// ================= STATUS DISPLAY FUNCTION =================
-// Purpose: Handle order status UI
-// Example:
-// - Placed
-// - Shipped
-// - Delivered
+    const card = document.createElement("div");
+    card.classList.add("order-card");
+
+    // Format items
+    let itemsHTML = "";
+
+    order.items.forEach(item => {
+      itemsHTML += `
+        <div class="order-item">
+          ${item.name} × ${item.quantity} — ₹${item.price * item.quantity}
+        </div>
+      `;
+    });
+
+    card.innerHTML = `
+      <div class="order-header">
+        <span class="order-id">Order ID: ${order.id}</span>
+        <span class="order-status">${order.status}</span>
+      </div>
+
+      <div class="order-items">
+        ${itemsHTML}
+      </div>
+
+      <div class="order-total">
+        Total: ₹${order.totalAmount}
+      </div>
+    `;
+
+    orderContainer.appendChild(card);
+  });
+}
 
 
 // ================= NAVBAR BUTTONS =================
-// Home button → redirect to home.html
-// Cart button → redirect to cart.html
-// Logout button → sign out user + redirect login.html
+
+// HOME
+document.getElementById("orders-home-btn").addEventListener("click", () => {
+  window.location.href = "./home.html";
+});
+
+// CART
+document.getElementById("orders-cart-btn").addEventListener("click", () => {
+  window.location.href = "./cart.html";
+});
+
+// LOGOUT
+document.getElementById("orders-logout-btn").addEventListener("click", async () => {
+  try {
+    await signOut(auth);
+    window.location.href = "./login.html";
+  } catch (err) {
+    alert("Logout error: " + err.message);
+  }
+});
 
 
-// ================= INIT FUNCTION =================
-// Purpose:
-// 1. Wait for auth state
-// 2. Load orders
-// 3. Render UI
+// ================= INIT =================
+onAuthStateChanged(auth, (user) => {
 
+  if (!user) {
+    alert("Please login first");
+    window.location.href = "./login.html";
+    return;
+  }
 
-// ================= ERROR HANDLING =================
-// Show alerts for:
-// - no user
-// - fetch failure
-// - empty orders
+  loadOrders(user);
+});
