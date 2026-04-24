@@ -151,6 +151,9 @@ logoutBtn.addEventListener("click", async () => {
 document.getElementById("home-cart-btn").onclick = () => {
   window.location.href = "./cart.html";
 };
+document.getElementById("home-orders-btn").onclick = () => {
+  window.location.href = "./orders.html";
+};
 
 // ================= INIT =================
 loadProducts();
