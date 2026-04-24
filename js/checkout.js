@@ -5,12 +5,13 @@ import { protectRoute } from "./routeprotect.js";
 import {
   collection,
   addDoc,
-  serverTimestamp
+  serverTimestamp,
+  doc,
+  deleteDoc,
+  getDocs
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-import {
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 // PROTECT
 protectRoute(["customer"]);
@@ -41,7 +42,11 @@ async function loadCheckout() {
     div.className = "checkout-item";
 
     div.innerHTML = `
-      <span>${item.name} (x${item.quantity})</span>
+      <img src="${item.imageURL || "https://via.placeholder.com/100"}" alt="${item.name}" />
+      <div class="checkout-item-info">
+        <p class="checkout-item-name">${item.name}</p>
+        <p class="checkout-item-price">₹${item.price} x ${item.quantity}</p>
+      </div>
       <span>₹${item.price * item.quantity}</span>
     `;
 
@@ -63,6 +68,7 @@ form.addEventListener("submit", async (e) => {
   if (!user) return alert("Login required");
 
   try {
+    // CREATE ORDER
     await addDoc(collection(db, "orders"), {
       userId: user.uid,
       items: cartItems,
@@ -74,6 +80,12 @@ form.addEventListener("submit", async (e) => {
       },
       status: "placed",
       createdAt: serverTimestamp()
+    });
+
+    // CLEAR CART
+    const snap = await getDocs(collection(db, "users", user.uid, "cart"));
+    snap.forEach(async (docItem) => {
+      await deleteDoc(doc(db, "users", user.uid, "cart", docItem.id));
     });
 
     alert("Order placed successfully!");
