@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description" content="View complete order details including items, pricing, and delivery information." />
+  <meta name="keywords" content="order details, ecommerce, order tracking" />
+
+  <title>Order Details | Store</title>
+
+  <link rel="stylesheet" href="orderDetails.css" />
+  <script type="module" src="js/orderDetails.js" defer></script>
+</head>
+
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="od-navbar">
+
+    <div class="od-navbar-top">
+      <h1 class="od-logo">STORE</h1>
+    </div>
+
+    <div class="od-navbar-bottom">
+      <div class="od-nav-actions">
+        <button id="od-home-btn" class="od-btn">Home</button>
+        <button id="od-orders-btn" class="od-btn">Orders</button>
+        <button id="od-logout-btn" class="od-btn">Logout</button>
+      </div>
+    </div>
+
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main class="od-main">
+
+    <!-- BACK -->
+    <nav class="od-back">
+      <a href="./orders.html">← Back to Orders</a>
+    </nav>
+
+    <!-- ORDER DETAILS -->
+    <section id="od-container" class="od-container"></section>
+
+  </main>
+
+</body>
+</html>
