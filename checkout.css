@@ -9,15 +9,15 @@ body {
   background: #f8fafc;
 }
 
-/* NAVBAR */
-.checkout-navbar {
+/* HEADER */
+.checkout-header {
   padding: 12px;
   text-align: center;
   background: rgba(15, 23, 42, 0.95);
 }
 
 .checkout-logo {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 800;
   background: linear-gradient(90deg, #38bdf8, #0ea5e9, #a78bfa);
   -webkit-background-clip: text;
@@ -32,10 +32,24 @@ body {
   gap: 20px;
 }
 
-/* CARD STYLE */
-.checkout-summary,
-.checkout-address {
-  background: white;
+/* NAV */
+.checkout-nav {
+  margin-bottom: 5px;
+}
+
+.checkout-back-link {
+  font-size: 14px;
+  text-decoration: none;
+  color: #0ea5e9;
+}
+
+.checkout-back-link:hover {
+  text-decoration: underline;
+}
+
+/* SECTIONS */
+.checkout-section {
+  background: #ffffff;
   padding: 16px;
   border-radius: 14px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
@@ -45,34 +59,61 @@ body {
 .checkout-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.checkout-item img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.checkout-item-info {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.checkout-item-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.checkout-item-price {
+  font-size: 13px;
+  color: #555;
 }
 
 /* TOTAL */
 .checkout-total {
-  font-weight: bold;
   margin-top: 10px;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 /* FORM */
-.checkout-address label {
-  display: block;
-  margin-bottom: 10px;
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-group label {
   font-size: 14px;
 }
 
-.checkout-address input,
-.checkout-address textarea {
+.form-group input,
+.form-group textarea {
   width: 100%;
   padding: 10px;
-  margin-top: 4px;
   border-radius: 8px;
   border: 1px solid #ccc;
+  margin-top: 4px;
 }
 
 /* BUTTON */
 .checkout-btn {
-  width: 100%;
   margin-top: 10px;
   padding: 12px;
   border: none;
@@ -89,8 +130,7 @@ body {
     flex-direction: row;
   }
 
-  .checkout-summary,
-  .checkout-address {
+  .checkout-section {
     flex: 1;
   }
 }
