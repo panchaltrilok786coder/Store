@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description" content="View your order history, track delivery status, and manage your purchases in Store." />
+  <meta name="keywords" content="orders, ecommerce, order history, track order" />
+  <meta name="author" content="Store" />
+
+  <title>My Orders | Store</title>
+
+  <link rel="stylesheet" href="orders.css" />
+  <script type="module" src="js/orders.js" defer></script>
+</head>
+
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="orders-navbar">
+
+    <!-- TOP ROW: LOGO -->
+    <div class="orders-navbar-top">
+      <h1 class="orders-logo">STORE</h1>
+    </div>
+
+    <!-- BOTTOM ROW: NAV BUTTONS -->
+    <div class="orders-navbar-bottom">
+
+      <div class="orders-nav-actions">
+
+        <button id="orders-home-btn" class="orders-btn">Home</button>
+        <button id="orders-cart-btn" class="orders-btn">Cart</button>
+        <button id="orders-logout-btn" class="orders-btn">Logout</button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main class="orders-main">
+
+    <!-- TITLE -->
+    <section class="orders-title-section">
+      <h2>My Orders</h2>
+      <p>Track your purchases and delivery status</p>
+    </section>
+
+    <!-- ORDERS LIST -->
+    <section id="orders-container" class="orders-container"></section>
+
+  </main>
+
+</body>
+</html>
