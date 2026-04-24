@@ -5,7 +5,7 @@ import {checkAuthState} from "./auth.js";
 // =========================
 const loginBox = document.getElementById("login-box");
 const signupBox = document.getElementById("signup-box");
-
+alert("Hello 1");
 const toSignup = document.getElementById("to-signup");
 const toLogin = document.getElementById("to-login");
 
