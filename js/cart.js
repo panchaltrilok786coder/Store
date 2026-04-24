@@ -9,7 +9,7 @@ import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth
 import { auth } from "./firebase.js";
 
 protectRoute(["customer", "admin"]);
-alert("cart.js is called");
+
 const list = document.getElementById("cart-list");
 const totalEl = document.getElementById("cart-total");
 const emptyEl = document.getElementById("cart-empty");
@@ -35,7 +35,7 @@ document.getElementById("go-home-btn").onclick = () => {
 document.getElementById("checkout-btn").onclick = () => {
   window.location.href = "./checkout.html";
 };
-
+alert("cart.js is called");
 // LOAD
 async function loadCart() {
   alert("loadCart function is called!!");
@@ -102,5 +102,5 @@ async function loadCart() {
      alert("Error:" + err)
   }
 }
-
+alert("Calling the loadCart from outside");
 loadCart();
