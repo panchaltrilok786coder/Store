@@ -1,0 +1,111 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Poppins, sans-serif;
+}
+
+body {
+  background: #f8fafc;
+}
+
+/* NAVBAR */
+.od-navbar {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  background: rgba(15, 23, 42, 0.95);
+}
+
+.od-navbar-top {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.od-logo {
+  font-size: 26px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #38bdf8, #0ea5e9, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.od-navbar-bottom {
+  display: flex;
+  justify-content: center;
+}
+
+.od-nav-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.od-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #38bdf8;
+  color: white;
+}
+
+/* MAIN */
+.od-main {
+  padding: 16px;
+}
+
+.od-back {
+  margin-bottom: 10px;
+}
+
+.od-back a {
+  text-decoration: none;
+  color: #0ea5e9;
+}
+
+/* CARD */
+.od-card {
+  background: white;
+  padding: 16px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.od-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.od-status {
+  color: #0ea5e9;
+  font-weight: 600;
+}
+
+.od-items {
+  margin: 10px 0;
+}
+
+.od-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.od-address {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #555;
+}
+
+.od-total {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+@media (min-width: 768px) {
+  .od-container {
+    max-width: 700px;
+    margin: auto;
+  }
+}
