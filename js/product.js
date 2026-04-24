@@ -121,6 +121,10 @@ document.getElementById("product-cart-btn").onclick = () => {
   window.location.href = "./cart.html";
 };
 
+document.getElementById("product-orders-btn").onclick = () => {
+  window.location.href = "./orders.html";
+};
+
 document.getElementById("product-logout-btn").onclick = async () => {
   await signOut(auth);
   window.location.href = "./login.html";
