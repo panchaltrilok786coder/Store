@@ -24,7 +24,7 @@ document.getElementById("logout-btn").onclick = async () => {
   window.location.href = "./login.html";
 };
 alert("cart.js is called 03");
-document.getElementById("cart-orders-btn").onclick = () => {
+document.getElementById("orders-btn").onclick = () => {
   window.location.href = "./orders.html";
 };
 alert("cart.js is called 04");
