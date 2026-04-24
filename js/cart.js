@@ -38,6 +38,7 @@ document.getElementById("checkout-btn").onclick = () => {
 
 // LOAD
 async function loadCart() {
+  alert("loadCart function is called!!");
   try{
   const items = await getCart();
   alert("CART DATA: " + JSON.stringify(items));
