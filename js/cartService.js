@@ -47,7 +47,7 @@ export async function addToCart(product) {
 // GET
 
 export function getCart() {
-  alert("GetCart function called ")
+  alert("GetCart function called ");
   return new Promise((resolve) => {
 
     onAuthStateChanged(auth, async (user) => {
