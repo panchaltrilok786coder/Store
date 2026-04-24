@@ -13,29 +13,29 @@ protectRoute(["customer", "admin"]);
 const list = document.getElementById("cart-list");
 const totalEl = document.getElementById("cart-total");
 const emptyEl = document.getElementById("cart-empty");
-
+alert("cart.js is called 01");
 // NAV
 document.getElementById("home-btn").onclick = () => {
   window.location.href = "./home.html";
 };
-
+alert("cart.js is called 02");
 document.getElementById("logout-btn").onclick = async () => {
   await signOut(auth);
   window.location.href = "./login.html";
 };
-
+alert("cart.js is called 03");
 document.getElementById("cart-orders-btn").onclick = () => {
   window.location.href = "./orders.html";
 };
-
+alert("cart.js is called 04");
 document.getElementById("go-home-btn").onclick = () => {
   window.location.href = "./home.html";
 };
-
+alert("cart.js is called 05");
 document.getElementById("checkout-btn").onclick = () => {
   window.location.href = "./checkout.html";
 };
-alert("cart.js is called");
+alert("cart.js is called 06");
 // LOAD
 async function loadCart() {
   alert("loadCart function is called!!");
