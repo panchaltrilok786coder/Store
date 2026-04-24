@@ -28,6 +28,9 @@ document.getElementById("go-home-btn").onclick = () => {
   window.location.href = "./home.html";
 };
 
+document.getElementById("checkout-btn").onclick = () => {
+  window.location.href = "./checkout.html";
+};
 
 // LOAD
 async function loadCart() {
