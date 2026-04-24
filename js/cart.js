@@ -4,7 +4,7 @@ import {
   removeFromCart,
   updateQuantity
 } from "./cartService.js";
-
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { auth } from "./firebase.js";
 
@@ -100,4 +100,11 @@ async function loadCart() {
   }
 }
 
-loadCart();
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    loadCart();
+  } else {
+    alert("Please login");
+    window.location.href = "./login.html";
+  }
+});
