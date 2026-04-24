@@ -40,7 +40,9 @@ document.getElementById("checkout-btn").onclick = () => {
 async function loadCart() {
   alert("loadCart function is called!!");
   try{
+  alert("Calling getCart");
   const items = await getCart();
+  alert("Called getCart")
   alert("CART DATA: " + JSON.stringify(items));
   list.innerHTML = "";
 
