@@ -24,6 +24,10 @@ document.getElementById("logout-btn").onclick = async () => {
   window.location.href = "./login.html";
 };
 
+document.getElementById("cart-orders-btn").onclick = () => {
+  window.location.href = "./orders.html";
+};
+
 document.getElementById("go-home-btn").onclick = () => {
   window.location.href = "./home.html";
 };
