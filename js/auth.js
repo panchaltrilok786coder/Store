@@ -73,34 +73,38 @@ export function checkAuthState() {
 
     if (!user) {
       alert("No user logged in");
+      window.location.href = "./login.html";
       return;
-    }else if (user){
+    }
 
     try {
-
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
 
       if (!userSnap.exists()) {
         alert("User document not found");
         return;
-      }else{
+      }
 
       const role = userSnap.data().role;
 
-      console.log("User role:", role);
-
       if (role === "admin") {
         window.location.href = "./admin.html";
-      } else {
-        window.location.href = "./home.html";
+        return;
       }
 
+      if (role === "customer") {
+        window.location.href = "./home.html";
+        return;
+      }
+
+      // fallback (if role missing or invalid)
+      alert("Invalid role");
+      
     } catch (err) {
-      console.error("Error fetching role:", err.message);
+      alert("Error fetching role: " + err.message);
     }
-    }
-    }
+
   });
 
 }
