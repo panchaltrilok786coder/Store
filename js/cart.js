@@ -38,6 +38,7 @@ document.getElementById("checkout-btn").onclick = () => {
 
 // LOAD
 async function loadCart() {
+  try{
   const items = await getCart();
   alert("CART DATA: " + JSON.stringify(items));
   list.innerHTML = "";
@@ -94,6 +95,9 @@ async function loadCart() {
   });
 
   totalEl.innerText = "Total: ₹" + total;
+ }catch(err){
+     alert("Error:" + err)
+  }
 }
 
 loadCart();
