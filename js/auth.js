@@ -72,9 +72,9 @@ export function checkAuthState() {
   onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
-      console.log("No user logged in");
+      alert("No user logged in");
       return;
-    }
+    }else{
 
     try {
 
@@ -82,9 +82,9 @@ export function checkAuthState() {
       const userSnap = await getDoc(userRef);
 
       if (!userSnap.exists()) {
-        console.error("User document not found");
+        alert("User document not found");
         return;
-      }
+      }else{
 
       const role = userSnap.data().role;
 
@@ -99,7 +99,8 @@ export function checkAuthState() {
     } catch (err) {
       console.error("Error fetching role:", err.message);
     }
-
+    }
+    }
   });
 
 }
