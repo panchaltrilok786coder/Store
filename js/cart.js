@@ -9,7 +9,7 @@ import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth
 import { auth } from "./firebase.js";
 
 protectRoute(["customer", "admin"]);
-
+alert("cart.js is called");
 const list = document.getElementById("cart-list");
 const totalEl = document.getElementById("cart-total");
 const emptyEl = document.getElementById("cart-empty");
