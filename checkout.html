@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Checkout - Securely place your order" />
 
-  <title>Checkout - Store</title>
+  <meta name="description" content="Secure checkout page to place your order. Review your cart, enter delivery details, and complete your purchase easily." />
+  <meta name="keywords" content="checkout, order, ecommerce, cart, payment, store" />
+  <meta name="author" content="Store" />
+
+  <title>Checkout | Store</title>
 
   <link rel="stylesheet" href="checkout.css" />
   <script type="module" src="js/checkout.js" defer></script>
@@ -13,48 +17,59 @@
 
 <body>
 
-<header class="checkout-navbar">
-  <h1 class="checkout-logo">STORE</h1>
-</header>
+  <!-- ================= HEADER ================= -->
+  <header class="checkout-header">
+    <h1 class="checkout-logo">STORE</h1>
+  </header>
 
-<main class="checkout-main">
+  <!-- ================= MAIN ================= -->
+  <main class="checkout-main">
 
-  <!-- ORDER SUMMARY -->
-  <section class="checkout-summary">
-    <h2>Order Summary</h2>
-    <div id="checkout-items"></div>
-    <p class="checkout-total">Total: ₹<span id="checkout-total"></span></p>
-  </section>
+    <!-- BACK LINK -->
+    <nav class="checkout-nav">
+      <a href="./cart.html" class="checkout-back-link">← Back to Cart</a>
+    </nav>
 
-  <!-- ADDRESS FORM -->
-  <section class="checkout-address">
-    <h2>Delivery Address</h2>
+    <!-- ORDER SUMMARY -->
+    <section class="checkout-section checkout-summary">
+      <h2>Order Summary</h2>
 
-    <form id="checkout-form">
+      <div id="checkout-items" class="checkout-items"></div>
 
-      <label>
-        Full Name
-        <input type="text" id="name" required />
-      </label>
+      <p class="checkout-total">
+        Total: ₹<span id="checkout-total">0</span>
+      </p>
+    </section>
 
-      <label>
-        Phone Number
-        <input type="tel" id="phone" required />
-      </label>
+    <!-- ADDRESS FORM -->
+    <section class="checkout-section checkout-address">
+      <h2>Delivery Details</h2>
 
-      <label>
-        Address
-        <textarea id="address" required></textarea>
-      </label>
+      <form id="checkout-form" class="checkout-form">
 
-      <button type="submit" class="checkout-btn">
-        Place Order
-      </button>
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input id="name" type="text" required placeholder="Enter your name" />
+        </div>
 
-    </form>
-  </section>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input id="phone" type="tel" required placeholder="Enter phone number" />
+        </div>
 
-</main>
+        <div class="form-group">
+          <label for="address">Full Address</label>
+          <textarea id="address" required placeholder="Enter full delivery address"></textarea>
+        </div>
+
+        <button type="submit" class="checkout-btn">
+          Place Order
+        </button>
+
+      </form>
+    </section>
+
+  </main>
 
 </body>
 </html>
