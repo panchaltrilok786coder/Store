@@ -74,7 +74,7 @@ export function checkAuthState() {
     if (!user) {
       alert("No user logged in");
       return;
-    }else{
+    }else if (user){
 
     try {
 
