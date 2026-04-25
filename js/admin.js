@@ -77,6 +77,11 @@ async function loadProducts() {
 
     productList.innerHTML = "";
 
+    if (snapshot.empty) {
+      productList.innerHTML = "<p>No products found</p>";
+      return;
+    }
+
     snapshot.forEach((docSnap) => {
       const product = docSnap.data();
       const id = docSnap.id;
@@ -85,9 +90,12 @@ async function loadProducts() {
       card.className = "admin-card";
 
       card.innerHTML = `
-        <img src="${product.imageURL}" style="width:100%; border-radius:10px;" />
+        <img src="${product.imageURL || 'https://via.placeholder.com/150'}" 
+             style="width:100%; border-radius:10px;" />
+
         <h3>${product.name}</h3>
         <p>₹${product.price}</p>
+
         <button data-id="${id}" class="delete-btn">Delete</button>
       `;
 
@@ -95,7 +103,8 @@ async function loadProducts() {
     });
 
   } catch (err) {
-    console.error("Error loading products:", err);
+    productList.innerHTML = "<p>Failed to load products</p>";
+    alert("Error loading products: " + err.message);
   }
 }
 
@@ -129,4 +138,4 @@ logoutBtn.addEventListener("click", async () => {
 // =========================
 // INIT
 // =========================
-loadProducts();
+window.addEventListener("DOMContentLoaded", loadProducts);
