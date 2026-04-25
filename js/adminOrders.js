@@ -102,18 +102,22 @@ orderFilterbtns.forEach((btn) =>{
       const filterOrders = collection(db , "orders");
       alert("Calling LoadOrders");
       loadOrders(filterOrders);
+      allOrders=[];
       alert("LoadOrders Called");
     } else if(btn.innerText === "Pending"){
-      const filterOrders = query(collection(db , "orders"),where("status"),"==", "Pending");
+      const filterOrders = query(collection(db , "orders"),where("status" ,"==", "Pending");
       loadOrders(filterOrders);
+      allOrders=[];
       alert("LoadOrders Called");
     } else if(btn.innerText === "Shipped"){
-      const filterOrders = query(collection(db , "orders"),where("status"),"==", "Shipped");
+      const filterOrders = query(collection(db , "orders"),where("status" ,"==", "Shipped");
       loadOrders(filterOrders);
+      allOrders=[];
       alert("LoadOrders Called");
     } else if(btn.innerText === "Delivered"){
-      const filterOrders = query(collection(db , "orders"),where("status"),"==", "Delivered");
+      const filterOrders = query(collection(db , "orders"),where("status" ,"==", "Delivered");
       loadOrders(filterOrders);
+      allOrders=[];
       alert("LoadOrders Called");
     }
   })
