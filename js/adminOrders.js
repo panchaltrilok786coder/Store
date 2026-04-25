@@ -81,6 +81,17 @@ function renderOrders(){
 };
 alert("L9");
 // ================= FILTERING ORDERS =================
+onAuthStateChanged(auth, (user) => {
+
+  if (!user) {
+    alert("Please login first");
+    window.location.href = "./login.html";
+    return;
+  }
+
+  Dynamic();
+});
+function Dynamic(){
 orderFilterbtns.forEach((btn) =>{
   btn.addEventListener("click", () =>{
     orderFilterbtns.forEach(b => b.classList.remove("active"));
@@ -107,3 +118,4 @@ orderFilterbtns.forEach((btn) =>{
     }
   })
 })
+}
