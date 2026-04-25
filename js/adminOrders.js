@@ -21,9 +21,9 @@ protectRoute(["admin"]);
 
 alert("L5");
 // ================= DOM ELEMENTS =================
-const ordersContainer = document.querySelectorAll(".filter-btn");
+const ordersContainer = document.getElementById("order-filters"); 
 alert("L6");
-const orderFilterbtns = document.getElementById("order-filters");
+const orderFilterbtns = document.querySelectorAll(".filter-btn");
 // ================= GLOBAL STATE =================
 let allOrders = [];
 
