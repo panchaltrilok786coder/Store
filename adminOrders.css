@@ -1,0 +1,203 @@
+/* =========================
+   IMPORT + RESET
+========================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* =========================
+   THEME (reuse admin system)
+========================= */
+:root {
+  --bg: #0f172a;
+  --panel: rgba(255,255,255,0.06);
+  --border: rgba(255,255,255,0.08);
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --accent: #38bdf8;
+  --accent2: #a78bfa;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+body {
+  background: radial-gradient(circle at top, #111c36, var(--bg));
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.admin-bg-section {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(56,189,248,0.15), transparent),
+              radial-gradient(circle at 80% 30%, rgba(167,139,250,0.12), transparent);
+  z-index: -1;
+}
+
+/* =========================
+   NAVBAR (same as admin)
+========================= */
+.admin-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 28px;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-logo-text {
+  font-size: 20px;
+  font-weight: 600;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.admin-nav-links {
+  display: flex;
+  gap: 14px;
+}
+
+.admin-nav-link {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.admin-nav-link:hover {
+  background: var(--panel);
+}
+
+.admin-logout-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  color: white;
+}
+
+/* =========================
+   MAIN
+========================= */
+.admin-main {
+  padding: 20px 28px;
+}
+
+/* =========================
+   SECTION
+========================= */
+.admin-section {
+  margin-bottom: 30px;
+}
+
+.admin-section-title {
+  font-size: 16px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+/* =========================
+   CARDS
+========================= */
+.admin-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.admin-card {
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+}
+
+/* =========================
+   FILTERS
+========================= */
+.order-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.filter-btn:hover {
+  background: var(--panel);
+}
+
+/* =========================
+   ORDER LIST
+========================= */
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ORDER CARD */
+.order-card {
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+}
+
+/* STATUS BADGE */
+.status {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  display: inline-block;
+  margin-top: 6px;
+}
+
+.status.pending {
+  background: orange;
+  color: black;
+}
+
+.status.shipped {
+  background: var(--accent);
+  color: white;
+}
+
+.status.delivered {
+  background: green;
+  color: white;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+
+  .admin-navbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .admin-nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
