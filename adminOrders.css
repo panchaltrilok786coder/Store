@@ -187,6 +187,17 @@ body {
 }
 
 /* =========================
+   FOOTER
+========================= */
+.admin-footer {
+  text-align: center;
+  padding: 20px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+
+
+/* =========================
    RESPONSIVE
 ========================= */
 @media (max-width: 768px) {
