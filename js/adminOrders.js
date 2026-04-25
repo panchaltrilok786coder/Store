@@ -89,7 +89,7 @@ onAuthStateChanged(auth, (user) => {
     return;
   }
 
-  Dynamic();
+  window.addEventListener("DOMContentLoaded", Dynamic);
 });
 function Dynamic(){
 orderFilterbtns.forEach((btn) =>{
