@@ -157,3 +157,41 @@ logoutBtn?.addEventListener("click", async () => {
   await signOut(auth);
   window.location.href = "./login.html";
 });
+
+const totalordercount = document.getElementById("total-orders");
+const todayorders = document.getElementById("today-orders");
+const totalrev = document.getElementById("total-revenue");
+
+async function countOrders() {
+
+  let counter = 0;
+  let todayCounter = 0;
+  let rev = 0;
+
+  const orders = await fetchOrders(collection(db, "orders"));
+
+  const now = new Date();
+
+  const startOfDay = new Date(now.setHours(0, 0, 0, 0));
+  const endOfDay = new Date(now.setHours(23, 59, 59, 999));
+
+  orders.forEach((order) => {
+
+    counter++;
+
+    rev += order.totalAmount || 0;
+
+    // 🔥 Correct date comparison
+    const orderDate = order.createdAt?.toDate?.();
+
+    if (orderDate && orderDate >= startOfDay && orderDate <= endOfDay) {
+      todayCounter++;
+    }
+  });
+
+  totalordercount.innerText = counter;
+  todayorders.innerText = todayCounter;
+  totalrev.innerText = "₹" + rev;
+}
+
+countOrders();
