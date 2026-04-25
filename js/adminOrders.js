@@ -1,31 +1,33 @@
 // ================= IMPORTS =================
+alert("L1");
 import { db, auth } from "./firebase.js";
 import { protectRoute } from "./routeprotect.js";
-
+alert("L2");
 import {
   collection,
   getDocs,
   query,
   where
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
+alert("L3");
 import {
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-
+alert("L4");
 // ================= ROUTE PROTECTION =================
 protectRoute(["admin"]);
 
-
+alert("L5");
 // ================= DOM ELEMENTS =================
 const ordersContainer = document.querySelectorAll(".filter-btn");
+alert("L6");
 const orderFilterbtns = document.getElementById("order-filters");
 // ================= GLOBAL STATE =================
 let allOrders = [];
 
-
+alert("L7");
 // ================= LOAD ORDERS =================
 async function loadOrders(filterOrders) {
     try{
@@ -36,13 +38,16 @@ async function loadOrders(filterOrders) {
              ...docSnap.data()
             });
       });
+      if(allOrders == null){
+      
+      }
       alert("Orders: "+ allOrders);
       renderOrders();
     }catch(err){
        alert(err.message);
     }
 }
-
+alert("L8");
 function renderOrders(){
   ordersContainer.innerHTML = "";
   if (allOrders.length === 0){
@@ -74,25 +79,31 @@ function renderOrders(){
     ordersContainer.appendChild(card);
   })
 };
-
+alert("L9");
 // ================= FILTERING ORDERS =================
 orderFilterbtns.forEach((btn) =>{
   btn.addEventListener("click", () =>{
     orderFilterbtns.forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
+    alert("Btn EL working properly");
     //FilterLogic
     if(btn.innerText === "All"){
       const filterOrders = collection(db , "orders");
+      alert("Calling LoadOrders");
       loadOrders(filterOrders);
+      alert("LoadOrders Called");
     } else if(btn.innerText === "Pending"){
       const filterOrders = query(collection(db , "orders"),where("status"),"==", "Pending");
       loadOrders(filterOrders);
+      alert("LoadOrders Called");
     } else if(btn.innerText === "Shipped"){
       const filterOrders = query(collection(db , "orders"),where("status"),"==", "Shipped");
       loadOrders(filterOrders);
+      alert("LoadOrders Called");
     } else if(btn.innerText === "Delivered"){
       const filterOrders = query(collection(db , "orders"),where("status"),"==", "Delivered");
       loadOrders(filterOrders);
+      alert("LoadOrders Called");
     }
   })
 })
