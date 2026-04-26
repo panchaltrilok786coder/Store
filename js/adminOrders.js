@@ -78,30 +78,54 @@ function renderOrders() {
     card.innerHTML = `
       <div class="od-header">
         <span>Order ID: ${order.id}</span>
-        <span class="status ${order.status?.toLowerCase()}">
-          ${order.status || "Pending"}
-        </span>
+        <span class="od-status">${order.status}</span>
       </div>
 
       <div class="od-items">
         ${itemsHTML}
       </div>
 
-      <div class="od-total">
-        Total: ₹${order.totalAmount || 0}
-      </div>
+      <div>Total: ₹${order.totalAmount || 0}</div>
 
       <div class="od-address">
-        <p><strong>Delivery Details:</strong></p>
         <p>${order.address?.name || ""}</p>
         <p>${order.address?.phone || ""}</p>
         <p>${order.address?.address || ""}</p>
       </div>
+
+      <select class="order-status" data-id="${order.id}">
+        <option value="Placed">Placed</option>
+        <option value="Pending">Pending</option>
+        <option value="Shipped">Shipped</option>
+        <option value="Delivered">Delivered</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
     `;
 
     ordersContainer.appendChild(card);
   });
 }
+
+// ================= STATUS UPDATE =================
+ordersContainer.addEventListener("change", async (e) => {
+
+  if (e.target.classList.contains("order-status")) {
+
+    const id = e.target.dataset.id;
+    const status = e.target.value;
+
+    try {
+      await updateDoc(doc(db, "orders", id), {
+        status
+      });
+
+      alert("Status updated");
+    } catch (err) {
+      alert("Error updating status");
+    }
+  }
+});
+
 
 
 // ================= FILTER LOGIC =================
