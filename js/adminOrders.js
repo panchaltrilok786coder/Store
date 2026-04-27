@@ -121,7 +121,7 @@ ordersContainer.addEventListener("change", async (e) => {
 
       alert("Status updated");
     } catch (err) {
-      alert("Error updating status");
+      alert("Error updating status" + err);
     }
   }
 });
