@@ -29,7 +29,7 @@ function createProductCard(product, id) {
   card.className = "home-product-card";
 
   card.innerHTML = `
-    <img class="home-product-image" src="${product.imageURL || "https://via.placeholder.com/300"}" />
+    <img class="home-product-image" src="${product.imageURL}" />
     
     <h3 class="home-product-title">${product.name}</h3>
     
