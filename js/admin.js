@@ -28,28 +28,31 @@ const costInput = document.getElementById("admin-product-cost-input");
 const priceInput = document.getElementById("admin-product-price-input");
 const imageInput = document.getElementById("admin-product-image-input");
 const productList = document.getElementById("admin-product-list");
-alert("Before form")
+alert("Before form");
 // =========================
 // ADD PRODUCT
 // =========================
 form.addEventListener("submit", async (e) => {
-  alert("Entered Form")
+  alert("Entered Form");
   e.preventDefault();
-
+  alert("e");
   const name = nameInput.value.trim();
+  alert("name");
   const productcost = Number(costInput.value);
+  alert("cost");
   const price = Number(priceInput.value);
+  alert("price");
   const imageURL = imageInput.value.trim(); // ✅ now string input
+  alert("imageUrl");
 
   if (!name || !cost || !price || !imageURL) {
     alert("Please fill all fields");
     return;
   }
-
+  alert("if");
   try {
-
-    console.log("ADDING PRODUCT...");
-
+    alert("try");
+    alert("before add Doc");
     await addDoc(collection(db, "products"), {
       name,
       price,
@@ -57,14 +60,10 @@ form.addEventListener("submit", async (e) => {
       imageURL,
       createdAt: new Date()
     });
-
-    console.log("PRODUCT ADDED");
-
     alert("Product added!");
-
     form.reset();
+    alert("form");
     loadProducts();
-
   } catch (err) {
     alert("FULL ERROR:", err);
   }
