@@ -36,7 +36,7 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const name = nameInput.value.trim();
-  const cost = Number(costInput.value);
+  const productcost = Number(costInput.value);
   const price = Number(priceInput.value);
   const imageURL = imageInput.value.trim(); // ✅ now string input
 
@@ -52,7 +52,7 @@ form.addEventListener("submit", async (e) => {
     await addDoc(collection(db, "products"), {
       name,
       price,
-      cost,
+      productcost,
       imageURL,
       createdAt: new Date()
     });
