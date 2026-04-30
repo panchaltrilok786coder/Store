@@ -24,6 +24,7 @@ protectRoute(["admin"]);
 // =========================
 const form = document.getElementById("admin-product-form");
 const nameInput = document.getElementById("admin-product-name-input");
+const costInput = document.getElementById("admin-product-cost-input");
 const priceInput = document.getElementById("admin-product-price-input");
 const imageInput = document.getElementById("admin-product-image-input");
 const productList = document.getElementById("admin-product-list");
@@ -35,10 +36,11 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const name = nameInput.value.trim();
+  const cost = Number(costInput.value);
   const price = Number(priceInput.value);
   const imageURL = imageInput.value.trim(); // ✅ now string input
 
-  if (!name || !price || !imageURL) {
+  if (!name || !cost || !price || !imageURL) {
     alert("Please fill all fields");
     return;
   }
@@ -50,6 +52,7 @@ form.addEventListener("submit", async (e) => {
     await addDoc(collection(db, "products"), {
       name,
       price,
+      cost,
       imageURL,
       createdAt: new Date()
     });
