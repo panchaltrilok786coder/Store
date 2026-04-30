@@ -45,7 +45,7 @@ form.addEventListener("submit", async (e) => {
   const imageURL = imageInput.value.trim(); // ✅ now string input
   alert("imageUrl");
 
-  if (!name || !cost || !price || !imageURL) {
+  if (!name || !productcost || !price || !imageURL) {
     alert("Please fill all fields");
     return;
   }
