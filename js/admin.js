@@ -66,7 +66,7 @@ form.addEventListener("submit", async (e) => {
     loadProducts();
 
   } catch (err) {
-    console.error("FULL ERROR:", err);
+    alert("FULL ERROR:", err);
   }
 });
 
