@@ -28,11 +28,12 @@ const costInput = document.getElementById("admin-product-cost-input");
 const priceInput = document.getElementById("admin-product-price-input");
 const imageInput = document.getElementById("admin-product-image-input");
 const productList = document.getElementById("admin-product-list");
-
+alert("Before form")
 // =========================
 // ADD PRODUCT
 // =========================
 form.addEventListener("submit", async (e) => {
+  alert("Entered Form")
   e.preventDefault();
 
   const name = nameInput.value.trim();
