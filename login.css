@@ -98,6 +98,40 @@ body {
 }
 
 /* =========================
+   Google Popup Button
+========================= */
+    .google-auth {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #googleSignInBtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border: 1px solid #dadce0;
+      border-radius: 6px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    #googleSignInBtn:hover {
+      background: #f7f8f8;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    #googleSignInBtn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+
+
+/* =========================
    SWITCH TEXT
 ========================= */
 .switch {
