@@ -1,4 +1,4 @@
-import { login, signup } from "./auth.js";
+import { login, signup, googleAuth } from "./auth.js";
 import {checkAuthState} from "./auth.js";
 // =========================
 // ELEMENTS
@@ -16,6 +16,7 @@ const signupPassword = document.getElementById("signup-password");
 
 const loginBtn = document.getElementById("login-btn");
 const signupBtn = document.getElementById("signup-btn");
+const googleAuthBtn = document.getElementById("googleSignInBtn‎");
 
 const loading = document.getElementById("loading");
 
@@ -39,6 +40,8 @@ loginBtn.addEventListener("click", async () => {
   loading.classList.remove("hidden");
 
   const result = await login(loginEmail.value, loginPassword.value);
+
+loading.classList.add("hidden");
 
   if (!result.success) {
     loading.classList.add("hidden");
@@ -64,5 +67,21 @@ signupBtn.addEventListener("click", async () => {
     loading.classList.add("hidden");
     signupBox.classList.add("hidden");
     loginBox.classList.remove("hidden");
+  }
+});
+
+// =========================
+// Google Auth
+// =========================
+googleAuthBtn.addEventListener("click", async () => {
+  loading.classList.remove("hidden");
+
+  const result = await googleAuth();
+
+  if (!result.success) {
+    loading.classList.add("hidden");
+    alert(result.error);
+  } else {
+    checkAuthState();
   }
 });
