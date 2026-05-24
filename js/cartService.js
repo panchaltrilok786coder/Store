@@ -15,11 +15,7 @@ import {
 // ADD
 export async function addToCart(product) {
 
-  alert("INSIDE addToCart");
-
   const user = auth.currentUser;
-
-  alert("USER: " + (user ? user.uid : "NULL"));
 
   if (!user) {
     alert("Login required");
@@ -27,18 +23,11 @@ export async function addToCart(product) {
   }
 
   try {
-
-    alert("WRITING TO FIRESTORE");
-
     const ref = doc(db, "users", user.uid, "cart", product.id);
-
     await setDoc(ref, {
       ...product,
       quantity: 1
     });
-
-    alert("WRITE SUCCESS");
-
   } catch (err) {
     alert("ERROR: " + err.message);
   }
@@ -47,11 +36,8 @@ export async function addToCart(product) {
 // GET
 
 export function getCart() {
-  alert("GetCart function called ");
   return new Promise((resolve) => {
-
     onAuthStateChanged(auth, async (user) => {
-
       if (!user) {
         alert("User not logged in");
         resolve([]);
