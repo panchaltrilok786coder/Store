@@ -3,13 +3,17 @@ import { auth, db } from "./firebase.js";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged
+  onAuthStateChanged,
+  signInWithPopup,
+  GoogleAuthProvider,
+  getAdditionalUserInfo
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 import {
   setDoc,
   doc,
-  getDoc
+  getDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 
@@ -25,7 +29,7 @@ export async function signup(email, password) {
     await setDoc(doc(db, "users", user.uid), {
       email: user.email,
       role: "customer",
-      createdAt: new Date()
+      createdAt: serverTimestamp()
     });
 
     console.log("Signup success:", user.uid);
@@ -63,7 +67,30 @@ export async function login(email, password) {
   }
 }
 
+// =======================
+// 🔐 Google Auth
+// =======================
 
+const provider = new GoogleAuthProvider();
+
+export async function googleAuth(){
+  try{
+  const googleResult = await signInWithPopup(auth, provider);
+  const additionalInfo = getAdditionalUserInfo(googleResult)
+  if (additionalInfo.isNewUser) {
+    // FIRST TIME SIGNUP
+    await setDoc(doc(db, "users", googleResult.user.uid), {
+      email: googleResult.user.email,
+      role : "customer",
+      createdAt: serverTimestamp()
+    })
+  }
+  return { success: true, user: googleResult.user };
+  }catch(err){
+    alert("Error: "+ err.message);
+    return { success: false, error: err.message };
+  }
+}
 // =======================
 // 🔁 AUTH STATE LISTENER
 // =======================
@@ -100,7 +127,7 @@ export function checkAuthState() {
 
       // fallback (if role missing or invalid)
       alert("Invalid role");
-      
+
     } catch (err) {
       alert("Error fetching role: " + err.message);
     }
