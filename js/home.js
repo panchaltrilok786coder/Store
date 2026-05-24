@@ -130,8 +130,6 @@ grid.addEventListener("click", (e) => {
       price: product.price,
       imageURL: product.imageURL
     });
-
-    alert("Added to cart");
   }
 
 });
