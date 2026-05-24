@@ -16,7 +16,7 @@ const signupPassword = document.getElementById("signup-password");
 
 const loginBtn = document.getElementById("login-btn");
 const signupBtn = document.getElementById("signup-btn");
-const googleAuthBtn = document.getElementById("googleSignInBtn‎");
+const googleAuthBtn = document.getElementById("googleSignInBtn");
 
 const loading = document.getElementById("loading");
 
