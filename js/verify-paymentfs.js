@@ -4,7 +4,7 @@ async function startPayment(totalAmount) {
 
     // call backend create-order API
     const response = await fetch(
-      "https://YOUR_BACKEND_URL.vercel.app/api/create-order",
+      "https://storeapi-xl4c.vercel.app/api/createorder",
       {
         method: "POST",
 
