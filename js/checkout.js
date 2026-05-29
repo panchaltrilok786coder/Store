@@ -132,22 +132,18 @@ async function clearCart(uid) {
 }
 
 async function startOnlinePayment(user, address, items) {
-  alert("1");
   try {
     const amount = Number(totalEl.innerText);
-    alert("12");
     // 1. CREATE ORDER (Vercel API)
     const res = await fetch("https://storeapi-xl4c.vercel.app/api/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount })
     });
-    alert("123");
     const order = await res.json();
-    alert(JSON.stringify(order));
     // 2. OPEN RAZORPAY
     const options = {
-      key: "YOUR_RAZORPAY_KEY_ID",
+      key: "rzp_test_StB2iN4eL3Dm6I",
       amount: order.amount,
       currency: order.currency,
       order_id: order.id,
@@ -179,12 +175,10 @@ async function startOnlinePayment(user, address, items) {
         color: "#38bdf8"
       }
     };
-    alert("1234");
     const rzp = new Razorpay(options);
     rzp.open();
 
   } catch (err) {
-    alert("1");
     alert(err.message);
   }
 }
