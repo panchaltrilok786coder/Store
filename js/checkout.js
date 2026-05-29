@@ -249,7 +249,7 @@ form.addEventListener("submit", async (e) => {
   // =========================
   // ONLINE FLOW (Razorpay later)
   // =========================
-  if (selectedPayment === "online") {
+  if (selectedPayment === "razorpay") {
     alert("inside selected payments !!!!");
     await startOnlinePayment(user, finalAddress, cartItems);
   }
