@@ -136,7 +136,7 @@ async function startOnlinePayment(user, address, items) {
     const amount = Number(totalEl.innerText);
 
     // 1. CREATE ORDER (Vercel API)
-    const res = await fetch("/api/create-order", {
+    const res = await fetch("https://storeapi-xl4c.vercel.app/api/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount })
@@ -154,7 +154,7 @@ async function startOnlinePayment(user, address, items) {
       handler: async function (response) {
 
         // 3. VERIFY PAYMENT
-        const verifyRes = await fetch("/api/verify-payment", {
+        const verifyRes = await fetch("https://storeapi-xl4c.vercel.app/api/verify-payment", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(response)
