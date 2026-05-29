@@ -132,14 +132,59 @@ async function clearCart(uid) {
 }
 
 async function startOnlinePayment(user, address, items) {
-  alert("Razorpay integration coming next...");
+  try {
+    const amount = Number(totalEl.innerText);
 
-  // NEXT STEP WILL BE:
-  // 1. call backend API
-  // 2. create razorpay order
-  // 3. open checkout
-  // 4. verify signature
-  // 5. then call placeOrder()
+    // 1. CREATE ORDER (Vercel API)
+    const res = await fetch("/api/create-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount })
+    });
+
+    const order = await res.json();
+
+    // 2. OPEN RAZORPAY
+    const options = {
+      key: "YOUR_RAZORPAY_KEY_ID",
+      amount: order.amount,
+      currency: order.currency,
+      order_id: order.id,
+
+      handler: async function (response) {
+
+        // 3. VERIFY PAYMENT
+        const verifyRes = await fetch("/api/verify-payment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(response)
+        });
+
+        const verifyData = await verifyRes.json();
+
+        if (verifyData.success) {
+          await placeOrder(user, address, items, "ONLINE");
+        } else {
+          alert("Payment verification failed");
+        }
+      },
+
+      prefill: {
+        name: user.displayName || "",
+        email: user.email
+      },
+
+      theme: {
+        color: "#38bdf8"
+      }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+
+  } catch (err) {
+    alert(err.message);
+  }
 }
 
 // PLACE ORDER
