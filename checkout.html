@@ -44,8 +44,11 @@
     <!-- ADDRESS FORM -->
     <section class="checkout-section checkout-address">
       <h2>Delivery Details</h2>
-
-      <form id="checkout-form" class="checkout-form">
+      <div id="saved-addresses" class="saved-addresses"></div>
+      <button type="button" id="show-address-form-btn">
+         + Add New Address
+      </button>
+      <form id="checkout-form" class="checkout-form hidden">
 
         <div class="form-group">
           <label for="name">Full Name</label>
@@ -62,12 +65,26 @@
           <textarea id="address" required placeholder="Enter full delivery address"></textarea>
         </div>
 
-        <button type="submit" class="checkout-btn">
-          Place Order
-        </button>
+        <section class="checkout-section">
+          <h2>Payment Method</h2>
 
-      </form>
-    </section>
+          <div class="payment-options">
+
+          <label>
+            <input type="radio" name="payment" value="cod" checked />
+            Cash on Delivery
+          </label>
+
+          <label>
+            <input type="radio" name="payment" value="razorpay" />
+           Razorpay
+         </label>
+
+        </div>
+</section>
+
+          </form>
+      </section>
 
   </main>
 
