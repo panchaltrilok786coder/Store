@@ -29,6 +29,13 @@ document.getElementById("show-address-form-btn").addEventListener("click", () =>
     form.classList.remove("hidden");
     selectedAddress = null;
 });
+document.querySelectorAll('input[name="payment"]').forEach((radio) => {
+  radio.addEventListener("change", (e) => {
+    selectedPayment = e.target.value;
+  });
+});
+
+let selectedPayment = "cod";
 let selectedAddress = null;
 let cartItems = [];
 
@@ -124,7 +131,16 @@ async function clearCart(uid) {
   await Promise.all(deletes);
 }
 
+async function startOnlinePayment(user, address, items) {
+  alert("Razorpay integration coming next...");
 
+  // NEXT STEP WILL BE:
+  // 1. call backend API
+  // 2. create razorpay order
+  // 3. open checkout
+  // 4. verify signature
+  // 5. then call placeOrder()
+}
 
 // PLACE ORDER
 async function placeOrder(user, address, items, paymentMode) {
