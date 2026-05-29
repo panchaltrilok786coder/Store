@@ -238,7 +238,7 @@ form.addEventListener("submit", async (e) => {
     alert("Please select or add address");
     return;
   }
-
+alert(selectedPayment);
   // =========================
   // COD FLOW
   // =========================
