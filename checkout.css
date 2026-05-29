@@ -124,6 +124,10 @@ body {
   cursor: pointer;
 }
 
+.hidden{
+  display: none;
+}
+
 /* DESKTOP */
 @media (min-width: 768px) {
   .checkout-main {
