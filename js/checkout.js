@@ -1,7 +1,10 @@
 import { db, auth } from "./firebase.js";
 import { getCart } from "./cartService.js";
 import { protectRoute } from "./routeprotect.js";
-
+import {
+  addAddress,
+  getAddresses
+} from "./addressService.js";
 import {
   collection,
   addDoc,
@@ -20,7 +23,9 @@ protectRoute(["customer"]);
 const itemsContainer = document.getElementById("checkout-items");
 const totalEl = document.getElementById("checkout-total");
 const form = document.getElementById("checkout-form");
+const savedAddressesEl = document.getElementById("saved-addresses");
 
+let selectedAddress = null;
 let cartItems = [];
 
 // LOAD CART
@@ -56,14 +61,71 @@ async function loadCheckout() {
   totalEl.innerText = total;
 }
 
+// Loading Address
+
+async function loadAddresses() {
+
+  const addresses = await getAddresses();
+
+  savedAddressesEl.innerHTML = "";
+
+  if (addresses.length === 0) {
+    form.classList.remove("hidden");
+    return;
+  }
+
+  form.classList.add("hidden");
+
+  addresses.forEach(address => {
+
+    const div = document.createElement("div");
+
+    div.className = "saved-address-card";
+
+    div.innerHTML = `
+      <h4>${address.name}</h4>
+      <p>${address.phone}</p>
+      <p>${address.address}</p>
+    `;
+
+    div.onclick = () => {
+
+      document
+        .querySelectorAll(".saved-address-card")
+        .forEach(card => {
+          card.classList.remove("selected-address");
+        });
+
+      div.classList.add("selected-address");
+
+      selectedAddress = address;
+    };
+
+    savedAddressesEl.appendChild(div);
+  });
+}
+
+
 // PLACE ORDER
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+
+  let finalAddress = selectedAddress;
+
+  if (!selectedAddress) {
 
   const name = document.getElementById("name").value;
   const phone = document.getElementById("phone").value;
   const address = document.getElementById("address").value;
 
+  finalAddress = {
+    name,
+    phone,
+    address
+  };
+
+  await addAddress(finalAddress);
+}
   const user = auth.currentUser;
   if (!user) return alert("Login required");
 
@@ -73,12 +135,8 @@ form.addEventListener("submit", async (e) => {
       userId: user.uid,
       items: cartItems,
       totalAmount: Number(totalEl.innerText),
-      address: {
-        name,
-        phone,
-        address
-      },
-      status: "placed",
+      address: finalAddress,
+      status: "pending",
       createdAt: serverTimestamp()
     });
 
@@ -99,5 +157,8 @@ form.addEventListener("submit", async (e) => {
 
 // INIT
 onAuthStateChanged(auth, (user) => {
-  if (user) loadCheckout();
+  if (user) {
+   loadCheckout();
+   loadAddresses();
+ }
 });
