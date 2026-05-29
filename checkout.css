@@ -128,6 +128,10 @@ body {
   display: none;
 }
 
+.selected-address{
+  background-color: blue;
+}
+
 /* DESKTOP */
 @media (min-width: 768px) {
   .checkout-main {
