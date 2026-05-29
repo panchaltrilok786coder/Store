@@ -24,7 +24,11 @@ const itemsContainer = document.getElementById("checkout-items");
 const totalEl = document.getElementById("checkout-total");
 const form = document.getElementById("checkout-form");
 const savedAddressesEl = document.getElementById("saved-addresses");
+document.getElementById("show-address-form-btn").addEventListener("click", () => {
 
+    form.classList.remove("hidden");
+    selectedAddress = null;
+});
 let selectedAddress = null;
 let cartItems = [];
 
@@ -102,15 +106,22 @@ async function loadAddresses() {
     };
 
     savedAddressesEl.appendChild(div);
+    if (!selectedAddress) {
+      selectedAddress = address;
+      div.classList.add("selected-address");
+    }
   });
 }
-
 
 // PLACE ORDER
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-
   let finalAddress = selectedAddress;
+
+  if (!finalAddress && form.classList.contains("hidden")) {
+    alert("Please select an address");
+    return;
+  }
 
   if (!selectedAddress) {
 
@@ -136,7 +147,7 @@ form.addEventListener("submit", async (e) => {
       items: cartItems,
       totalAmount: Number(totalEl.innerText),
       address: finalAddress,
-      status: "pending",
+      status: "Pending",
       createdAt: serverTimestamp()
     });
 
@@ -157,8 +168,14 @@ form.addEventListener("submit", async (e) => {
 
 // INIT
 onAuthStateChanged(auth, (user) => {
+
   if (user) {
-   loadCheckout();
-   loadAddresses();
- }
+
+    document.getElementById("name").value =
+      user.displayName || "";
+
+    loadCheckout();
+    loadAddresses();
+  }
+
 });
