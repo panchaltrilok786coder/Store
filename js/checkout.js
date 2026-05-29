@@ -113,56 +113,81 @@ async function loadAddresses() {
   });
 }
 
-// PLACE ORDER
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  let finalAddress = selectedAddress;
 
-  if (!finalAddress && form.classList.contains("hidden")) {
-    alert("Please select an address");
-    return;
-  }
+async function clearCart(uid) {
+  const snap = await getDocs(collection(db, "users", uid, "cart"));
 
-  if (!selectedAddress) {
+  const deletes = snap.docs.map((d) =>
+    deleteDoc(doc(db, "users", uid, "cart", d.id))
+  );
 
-  const name = document.getElementById("name").value;
-  const phone = document.getElementById("phone").value;
-  const address = document.getElementById("address").value;
-
-  finalAddress = {
-    name,
-    phone,
-    address
-  };
-
-  await addAddress(finalAddress);
+  await Promise.all(deletes);
 }
-  const user = auth.currentUser;
-  if (!user) return alert("Login required");
 
+
+
+// PLACE ORDER
+async function placeOrder(user, address, items, paymentMode) {
   try {
-    // CREATE ORDER
     await addDoc(collection(db, "orders"), {
       userId: user.uid,
-      items: cartItems,
+      items,
       totalAmount: Number(totalEl.innerText),
-      address: finalAddress,
+      address,
+      paymentMode,
       status: "Pending",
+      paymentStatus: paymentMode === "COD" ? "Cash on Delivery" : "Paid/Pending",
       createdAt: serverTimestamp()
     });
 
-    // CLEAR CART
-    const snap = await getDocs(collection(db, "users", user.uid, "cart"));
-    snap.forEach(async (docItem) => {
-      await deleteDoc(doc(db, "users", user.uid, "cart", docItem.id));
-    });
+    await clearCart(user.uid);
 
     alert("Order placed successfully!");
-
     window.location.href = "./home.html";
 
   } catch (err) {
     alert(err.message);
+  }
+}
+
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const user = auth.currentUser;
+  if (!user) return alert("Login required");
+
+  let finalAddress = selectedAddress;
+
+  // If no saved address, take from form
+  if (!finalAddress) {
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const address = document.getElementById("address").value;
+
+    finalAddress = { name, phone, address };
+
+    await addAddress(finalAddress);
+  }
+
+  // Validate address
+  if (!finalAddress) {
+    alert("Please select or add address");
+    return;
+  }
+
+  // =========================
+  // COD FLOW
+  // =========================
+  if (selectedPayment === "cod") {
+    await placeOrder(user, finalAddress, cartItems, "COD");
+  }
+
+  // =========================
+  // ONLINE FLOW (Razorpay later)
+  // =========================
+  if (selectedPayment === "online") {
+    await startOnlinePayment(user, finalAddress, cartItems);
   }
 });
 
