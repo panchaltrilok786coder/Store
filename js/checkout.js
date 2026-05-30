@@ -211,6 +211,7 @@ async function placeOrder(user, address, items, paymentMode) {
 
 
 paymentBtn.addEventListener("click", async (e) => {
+  alert("form clicking");
   e.preventDefault();
 
   const user = auth.currentUser;
