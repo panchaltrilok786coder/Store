@@ -22,7 +22,7 @@ protectRoute(["customer"]);
 // DOM
 const itemsContainer = document.getElementById("checkout-items");
 const totalEl = document.getElementById("checkout-total");
-const form = document.getElementById("checkout-form");
+const paymentBtn = document.getElementById("checkout-btn");
 const savedAddressesEl = document.getElementById("saved-addresses");
 document.getElementById("show-address-form-btn").addEventListener("click", () => {
 
@@ -209,7 +209,7 @@ async function placeOrder(user, address, items, paymentMode) {
 }
 
 
-form.addEventListener("submit", async (e) => {
+paymentBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
   const user = auth.currentUser;
