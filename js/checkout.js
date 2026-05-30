@@ -23,6 +23,7 @@ protectRoute(["customer"]);
 const itemsContainer = document.getElementById("checkout-items");
 const totalEl = document.getElementById("checkout-total");
 const paymentBtn = document.getElementById("checkout-btn");
+const form = document.getElementById("checkout-form");
 const savedAddressesEl = document.getElementById("saved-addresses");
 document.getElementById("show-address-form-btn").addEventListener("click", () => {
 
