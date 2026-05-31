@@ -21,71 +21,99 @@
   <header class="checkout-header">
     <h1 class="checkout-logo">STORE</h1>
   </header>
-
-  <!-- ================= MAIN ================= -->
-  <main class="checkout-main">
-
     <!-- BACK LINK -->
     <nav class="checkout-nav">
       <a href="./cart.html" class="checkout-back-link">← Back to Cart</a>
     </nav>
 
-    <!-- ORDER SUMMARY -->
-    <section class="checkout-section checkout-summary">
-      <h2>Order Summary</h2>
+//==========≠========= Checkout Main ==========∞==============
+  <main class="checkout-main">
 
-      <div id="checkout-items" class="checkout-items"></div>
+  <!-- ORDER SUMMARY -->
+  <section class="checkout-section checkout-summary">
+    <h2>Order Summary</h2>
+    <div id="checkout-items"></div>
 
-      <p class="checkout-total">
-        Total: ₹<span id="checkout-total">0</span>
-      </p>
-    </section>
+    <p class="checkout-total">
+      Total: ₹<span id="checkout-total">0</span>
+    </p>
+  </section>
 
-    <!-- ADDRESS FORM -->
-    <section class="checkout-section checkout-address">
-      <h2>Delivery Details</h2>
-      <div id="saved-addresses" class="saved-addresses"></div>
-      <button type="button" id="show-address-form-btn">
-         + Add New Address
-      </button>
-      <form id="checkout-form" class="checkout-form hidden">
+  <!-- SAVED ADDRESSES -->
+  <section class="checkout-section">
+    <h2>Select Delivery Address</h2>
 
-        <div class="form-group">
-          <label for="name">Full Name</label>
-          <input id="name" type="text" required placeholder="Enter your name" />
-        </div>
+    <div id="saved-addresses" class="saved-addresses"></div>
 
-        <div class="form-group">
-          <label for="phone">Phone Number</label>
-          <input id="phone" type="tel" required placeholder="Enter phone number" />
-        </div>
+    <button
+      type="button"
+      id="show-address-form-btn"
+      class="secondary-btn">
+      + Add New Address
+    </button>
+  </section>
 
-        <div class="form-group">
-          <label for="address">Full Address</label>
-          <textarea id="address" required placeholder="Enter full delivery address"></textarea>
-        </div>
-          </form>
-          
-        <section class="checkout-section">
-          <h2>Payment Method</h2>
-          <div class="payment-options">
-            
-          <label>
-            <input type="radio" name="payment" value="cod" checked />
-            Cash on Delivery
-          </label>
+  <!-- ADDRESS FORM -->
+  <section
+    id="address-form-section"
+    class="checkout-section hidden">
 
-          <label>
-            <input type="radio" name="payment" value="razorpay" />
-           Razorpay
-         </label>
+    <h2>Add New Address</h2>
 
-        </div>
-        </section>
-        <button type="button" id="checkout-btn" class="checkout-btn">Continue Payment</button>
-      </section>
+    <form id="checkout-form" class="checkout-form">
 
-  </main>
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input id="name" type="text" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input id="phone" type="tel" required>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Address</label>
+        <textarea id="address" required></textarea>
+      </div>
+
+    </form>
+  </section>
+
+  <!-- PAYMENT METHOD -->
+  <section class="checkout-section">
+    <h2>Payment Method</h2>
+
+    <div class="payment-options">
+
+      <label class="payment-card">
+        <input
+          type="radio"
+          name="payment"
+          value="cod"
+          checked>
+        <span>Cash on Delivery</span>
+      </label>
+
+      <label class="payment-card">
+        <input
+          type="radio"
+          name="payment"
+          value="online">
+        <span>Online Payment</span>
+      </label>
+
+    </div>
+  </section>
+
+  <!-- FINAL BUTTON -->
+  <section class="checkout-section">
+    <button id="place-order-btn" class="checkout-btn">
+      Place Order
+    </button>
+  </section>
+
+</main>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </body>
 </html>
