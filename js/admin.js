@@ -28,11 +28,6 @@ const imageInput = document.getElementById("admin-product-image-input");
 const productList = document.getElementById("admin-product-list");
 
 // =========================
-// Delivery Fee Global Var 
-// =========================
-export const DELIVERY_FEE = 10;
-
-// =========================
 // Global Var 
 // =========================
 const CLOUD_NAME = "djctmy4oq";
