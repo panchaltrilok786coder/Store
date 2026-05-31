@@ -28,31 +28,65 @@ const costInput = document.getElementById("admin-product-cost-input");
 const priceInput = document.getElementById("admin-product-price-input");
 const imageInput = document.getElementById("admin-product-image-input");
 const productList = document.getElementById("admin-product-list");
-alert("Before form");
+
+
+// =========================
+// Global Var 
+// =========================
+const CLOUD_NAME = "djctmy4oq";
+const UPLOAD_PRESET = "products";
+
+imageInput.addEventListener("change", () => {
+  const file = imageInput.files[0];
+  if (!file) return;
+});
+
+async function uploadImageToCloudinary(file) {
+
+  const formData = new FormData();
+
+  formData.append("file", file);
+  formData.append(
+    "upload_preset",
+    UPLOAD_PRESET
+  );
+
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+    {
+      method: "POST",
+      body: formData
+    }
+  );
+
+  const data = await response.json();
+
+  return data.secure_url;
+}
+
+
 // =========================
 // ADD PRODUCT
 // =========================
 form.addEventListener("submit", async (e) => {
-  alert("Entered Form");
   e.preventDefault();
-  alert("e");
-  const name = nameInput.value.trim();
-  alert("name");
-  const productcost = Number(costInput.value);
-  alert("cost");
-  const price = Number(priceInput.value);
-  alert("price");
-  const imageURL = imageInput.value.trim(); // ✅ now string input
-  alert("imageUrl");
+  const file = document.getElementById("product-image").files[0];
+  let imageURL = "";
+  if (file) {
+  const imageURL =  await uploadImageToCloudinary(file);
+  }else{
+  alert("Please upload a file");
+  return;
+  }
 
+  const name = nameInput.value.trim();
+  const productcost = Number(costInput.value);
+  const price = Number(priceInput.value);
   if (!name || !productcost || !price || !imageURL) {
     alert("Please fill all fields");
     return;
   }
-  alert("if");
   try {
-    alert("try");
-    alert("before add Doc");
     await addDoc(collection(db, "products"), {
       name,
       price,
@@ -62,7 +96,6 @@ form.addEventListener("submit", async (e) => {
     });
     alert("Product added!");
     form.reset();
-    alert("form");
     loadProducts();
   } catch (err) {
     alert("FULL ERROR:", err);
