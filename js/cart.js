@@ -1,4 +1,5 @@
 import { protectRoute } from "./routeprotect.js";
+import { DELIVERY_FEE } from "./admin.js";
 import {
   getCart,
   removeFromCart,
@@ -13,7 +14,11 @@ protectRoute(["customer", "admin"]);
 const list = document.getElementById("cart-list");
 const totalEl = document.getElementById("cart-total");
 const emptyEl = document.getElementById("cart-empty");
-
+function getdeliveryFee(){
+  const deliveryFee = DELIVERY_FEE;
+  const deliveryfeeEl = document.getElementById("cart-delivery-fee");
+  deliveryfeeEl.innerText = `₹${deliveryFee}`
+}
 // NAV
 document.getElementById("home-btn").onclick = () => {
   window.location.href = "./home.html";
@@ -46,7 +51,6 @@ document.getElementById("checkout-btn").onclick = async () => {
 async function loadCart() {
   try{
   const items = await getCart();
-  alert("CART DATA: " + JSON.stringify(items));
   list.innerHTML = "";
 
   if (items.length === 0) {
