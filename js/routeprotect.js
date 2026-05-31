@@ -32,7 +32,6 @@ export function protectRoute(allowedRoles) {
       // ❌ Role not allowed
       if (!allowedRoles.includes(role)) {
         alert("Access denied!");
-        alert(allowesRoles);
         window.location.href = "./login.html";
         return;
       }
