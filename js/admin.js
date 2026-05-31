@@ -11,7 +11,8 @@ import {
   addDoc,
   getDocs,
   deleteDoc,
-  doc
+  doc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // =========================
@@ -70,10 +71,10 @@ async function uploadImageToCloudinary(file) {
 // =========================
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const file = document.getElementById("product-image").files[0];
+  const file = document.getElementById("admin-product-image-input").files[0];
   let imageURL = "";
   if (file) {
-  const imageURL =  await uploadImageToCloudinary(file);
+  imageURL =  await uploadImageToCloudinary(file);
   }else{
   alert("Please upload a file");
   return;
@@ -92,7 +93,7 @@ form.addEventListener("submit", async (e) => {
       price,
       productcost,
       imageURL,
-      createdAt: new Date()
+      createdAt: serverTimestamp();
     });
     alert("Product added!");
     form.reset();
