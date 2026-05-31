@@ -113,6 +113,7 @@ async function loadCart() {
 onAuthStateChanged(auth, (user) => {
   if (user) {
     loadCart();
+    getdeliveryFee();
   } else {
     alert("Please login");
     window.location.href = "./login.html";
