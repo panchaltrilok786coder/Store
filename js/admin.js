@@ -93,7 +93,7 @@ form.addEventListener("submit", async (e) => {
       price,
       productcost,
       imageURL,
-      createdAt: serverTimestamp();
+      createdAt: serverTimestamp()
     });
     alert("Product added!");
     form.reset();
