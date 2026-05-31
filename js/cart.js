@@ -32,8 +32,14 @@ document.getElementById("go-home-btn").onclick = () => {
   window.location.href = "./home.html";
 };
 
-document.getElementById("checkout-btn").onclick = () => {
-  window.location.href = "./checkout.html";
+document.getElementById("checkout-btn").onclick = async () => {
+  const items = await getCart();
+
+  if (items.length === 0) {
+    alert("The cart is Empty");
+  } else {
+    window.location.href = "./checkout.html";
+  }
 };
 
 // LOAD
