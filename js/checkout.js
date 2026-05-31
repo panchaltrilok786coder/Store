@@ -26,7 +26,7 @@ const paymentBtn = document.getElementById("place-order-btn");
 const form = document.getElementById("checkout-form");
 const savedAddressesEl = document.getElementById("saved-addresses");
 document.getElementById("show-address-form-btn").addEventListener("click", () => {
-
+    alert("hi");
     form.classList.remove("hidden");
     selectedAddress = null;
 });
