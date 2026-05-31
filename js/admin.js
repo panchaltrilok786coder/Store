@@ -5,7 +5,6 @@ import { db } from "./firebase.js";
 import { protectRoute } from "./routeprotect.js";
 import { auth } from "./firebase.js";
 import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-alert("1");
 import {
   collection,
   addDoc,
@@ -14,12 +13,10 @@ import {
   doc,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-alert("12");
 // =========================
 // PROTECT ADMIN ROUTE
 // =========================
 protectRoute(["admin"]);
-alert("13");
 // =========================
 // DOM ELEMENTS
 // =========================
@@ -29,14 +26,17 @@ const costInput = document.getElementById("admin-product-cost-input");
 const priceInput = document.getElementById("admin-product-price-input");
 const imageInput = document.getElementById("admin-product-image-input");
 const productList = document.getElementById("admin-product-list");
-alert("14");
+
+// =========================
+// Delivery Fee Global Var 
+// =========================
+export const DELIVERY_FEE = 10;
 
 // =========================
 // Global Var 
 // =========================
 const CLOUD_NAME = "djctmy4oq";
 const UPLOAD_PRESET = "products";
-alert("15");
 imageInput.addEventListener("change", () => {
   const file = imageInput.files[0];
   if (!file) return;
@@ -151,7 +151,6 @@ async function loadProducts() {
 productList.addEventListener("click", async (e) => {
   if (e.target.classList.contains("delete-btn")) {
     const id = e.target.dataset.id;
-
     try {
       await deleteDoc(doc(db, "products", id));
       alert("Product deleted!");
