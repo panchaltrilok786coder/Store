@@ -128,8 +128,52 @@ body {
   display: none;
 }
 
-.selected-address{
-  background-color: blue;
+.saved-addresses {
+  display: grid;
+  gap: 1rem;
+}
+
+.saved-address-card {
+  padding: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 14px;
+  background: white;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.saved-address-card:hover {
+  transform: translateY(-2px);
+}
+
+.selected-address {
+  border: 2px solid #0ea5e9;
+  background: rgba(14,165,233,0.08);
+  box-shadow:
+    0 0 0 3px rgba(14,165,233,0.15);
+}
+
+.payment-options {
+  display: grid;
+  gap: 1rem;
+}
+
+.payment-card {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+
+  padding: 1rem;
+
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+
+  cursor: pointer;
+  transition: .2s;
+}
+
+.payment-card:hover {
+  border-color: #38bdf8;
 }
 
 /* DESKTOP */
