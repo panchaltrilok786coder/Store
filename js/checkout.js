@@ -195,7 +195,7 @@ async function placeOrder(user, address, items, paymentMode) {
       address,
       paymentMode,
       status: "Pending",
-      paymentStatus: paymentMode === "COD" ? "Cash on Delivery" : "Paid/Pending",
+      paymentStatus: paymentMode,
       createdAt: serverTimestamp()
     });
 
