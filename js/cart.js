@@ -1,5 +1,7 @@
+alert("Hi");
 import { protectRoute } from "./routeprotect.js";
 import { DELIVERY_FEE } from "./admin.js";
+alert("delivery fee import");
 import {
   getCart,
   removeFromCart,
@@ -14,6 +16,7 @@ protectRoute(["customer", "admin"]);
 const list = document.getElementById("cart-list");
 const totalEl = document.getElementById("cart-total");
 const emptyEl = document.getElementById("cart-empty");
+alert("Empty");
 function getdeliveryFee(){
   const deliveryFee = DELIVERY_FEE;
   const deliveryfeeEl = document.getElementById("cart-delivery-fee");
