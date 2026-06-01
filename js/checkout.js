@@ -70,7 +70,8 @@ async function loadCheckout() {
 
     itemsContainer.appendChild(div);
   });
-  totalAmount = total*1.05
+  totalAmount = total*1.05;
+  alert(`${totalAmount} ,${total}`);
   totalEl.innerText = totalAmount;
 }
 
