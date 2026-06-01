@@ -1,7 +1,11 @@
+// =========================
+// IMPORTS
+// =========================
 import { db, auth } from "./firebase.js";
 import { getCart } from "./cartService.js";
 import { protectRoute } from "./routeprotect.js";
 import { addAddress, getAddresses } from "./addressService.js";
+
 import {
   collection,
   addDoc,
@@ -10,68 +14,98 @@ import {
   deleteDoc,
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// PROTECT
-protectRoute(["customer"]);
+import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+// =========================
+// ROUTE PROTECTION
+// =========================
+protectRoute(["customer", "admin"]);
+
+// =========================
 // DOM ELEMENTS
+// =========================
 const itemsContainer = document.getElementById("checkout-items");
 const totalEl = document.getElementById("checkout-total");
 const paymentBtn = document.getElementById("place-order-btn");
 const form = document.getElementById("address-form-section");
 const savedAddressesEl = document.getElementById("saved-addresses");
 
+// =========================
+// STATE
+// =========================
+let selectedPayment = "cod";
+let selectedAddress = null;
+let cartItems = [];
+
+// =========================
+// UI EVENTS
+// =========================
 document.getElementById("show-address-form-btn").addEventListener("click", () => {
   form.classList.remove("hidden");
   selectedAddress = null;
-  // Clear any previous selections visually
-  document.querySelectorAll(".saved-address-card").forEach(card => card.classList.remove("selected-address"));
+
+  document.querySelectorAll(".saved-address-card")
+    .forEach(c => c.classList.remove("selected-address"));
 });
 
-document.querySelectorAll('input[name="payment"]').forEach((radio) => {
+document.querySelectorAll('input[name="payment"]').forEach(radio => {
   radio.addEventListener("change", (e) => {
     selectedPayment = e.target.value;
   });
 });
 
-let selectedPayment = "cod";
-let selectedAddress = null;
-let cartItems = [];
-
-// LOAD CART
+// =========================
+// LOAD CHECKOUT
+// =========================
 async function loadCheckout() {
-  cartItems = await getCart();
+  try {
+    cartItems = await getCart();
 
-  if (cartItems.length === 0) {
-    itemsContainer.innerHTML = "<p>Your cart is empty</p>";
-    return;
+    if (cartItems.length === 0) {
+      itemsContainer.innerHTML = "<p>Your cart is empty</p>";
+      totalEl.innerText = "0";
+      return;
+    }
+
+    let total = 0;
+    itemsContainer.innerHTML = "";
+
+    cartItems.forEach(item => {
+      total += item.price * item.quantity;
+
+      const div = document.createElement("div");
+      div.className = "checkout-item";
+
+      div.innerHTML = `
+        <img src="${item.imageURL || "https://via.placeholder.com/100"}" />
+        <div>
+          <p>${item.name}</p>
+          <p>₹${item.price} x ${item.quantity}</p>
+        </div>
+        <b>₹${item.price * item.quantity}</b>
+      `;
+
+      itemsContainer.appendChild(div);
+    });
+
+    // =========================
+    // 5% PLATFORM FEE
+    // =========================
+    const finalTotal = Math.ceil(total * 1.05);
+
+    totalEl.innerText = finalTotal;
+
+  } catch (err) {
+    alert("Checkout error:\n" + (err.message || err));
   }
-
-  let total = 0;
-  itemsContainer.innerHTML = "";
-
-  cartItems.forEach(item => {
-    total += item.price * item.quantity;
-
-    const div = document.createElement("div");  
-    div.className = "checkout-item";  
-    div.innerHTML = `  
-      <img src="${item.imageURL || "https://via.placeholder.com/100"}" alt="${item.name}" />  
-      <div class="checkout-item-info">  
-        <p class="checkout-item-name">${item.name}</p>  
-        <p class="checkout-item-price">₹${item.price} x ${item.quantity}</p>  
-      </div>  
-      <span>₹${item.price * item.quantity}</span>  
-    `;  
-    itemsContainer.appendChild(div);
-  });
-
-  let totalAmount = Math.ceil(total * 1.05); // Including 5% tax/fees
-  totalEl.innerText = totalAmount;
 }
 
-// LOAD SAVED ADDRESSES
+// =========================
+// LOAD ADDRESSES
+// =========================
 async function loadAddresses() {
   const addresses = await getAddresses();
   savedAddressesEl.innerHTML = "";
@@ -84,170 +118,197 @@ async function loadAddresses() {
   form.classList.add("hidden");
 
   addresses.forEach(address => {
-    const div = document.createElement("div");  
-    div.className = "saved-address-card";  
-    div.innerHTML = `  
-      <h4>${address.name}</h4>  
-      <p>${address.phone}</p>  
-      <p>${address.address}</p>  
-    `;  
+    const div = document.createElement("div");
+    div.className = "saved-address-card";
 
-    div.onclick = () => {  
-      document.querySelectorAll(".saved-address-card").forEach(card => {  
-        card.classList.remove("selected-address");  
-      });  
-      div.classList.add("selected-address");  
-      selectedAddress = address;  
-      // Hide form if they select an existing address
-      form.classList.add("hidden"); 
-    };  
+    div.innerHTML = `
+      <h4>${address.name}</h4>
+      <p>${address.phone}</p>
+      <p>${address.address}</p>
+    `;
 
-    savedAddressesEl.appendChild(div);  
-    
-    if (!selectedAddress) {  
-      selectedAddress = address;  
-      div.classList.add("selected-address");  
+    div.onclick = () => {
+      document.querySelectorAll(".saved-address-card")
+        .forEach(c => c.classList.remove("selected-address"));
+
+      div.classList.add("selected-address");
+      selectedAddress = address;
+      form.classList.add("hidden");
+    };
+
+    savedAddressesEl.appendChild(div);
+
+    if (!selectedAddress) {
+      selectedAddress = address;
+      div.classList.add("selected-address");
     }
   });
 }
 
+// =========================
 // CLEAR CART
+// =========================
 async function clearCart(uid) {
   const snap = await getDocs(collection(db, "users", uid, "cart"));
-  const deletes = snap.docs.map((d) => deleteDoc(doc(db, "users", uid, "cart", d.id)));
-  await Promise.all(deletes);
+  const tasks = snap.docs.map(d =>
+    deleteDoc(doc(db, "users", uid, "cart", d.id))
+  );
+  await Promise.all(tasks);
 }
 
-// ONLINE PAYMENT FLOW
-async function startOnlinePayment(user, address, items) {
-  try {
-    const amount = Number(totalEl.innerText);
-    
-    // 1. CREATE ORDER (Vercel API)
-    const res = await fetch("https://storeapi-xl4c.vercel.app/api/create-order", {
+// =========================
+// RAZORPAY: CREATE ORDER
+// =========================
+async function createOrder(amount) {
+  const res = await fetch(
+    "https://storeapi-xl4c.vercel.app/api/create-order",
+    {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount })
-    });
-    
-    const order = await res.json(); 
-
-    if (!res.ok) {
-      alert(
-        "Status: " + res.status +
-        "\nError: " +
-        JSON.stringify(order)
-      );
-      return;
     }
-    // 2. OPEN RAZORPAY
+  );
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    alert("Create Order Failed:\n" + JSON.stringify(data, null, 2));
+    throw new Error("Order creation failed");
+  }
+
+  return data.order;
+}
+
+// =========================
+// RAZORPAY: VERIFY PAYMENT
+// =========================
+async function verifyPayment(payload) {
+  const res = await fetch(
+    "https://storeapi-xl4c.vercel.app/api/verify-payment",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }
+  );
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    alert("Verify Failed:\n" + JSON.stringify(data, null, 2));
+    return false;
+  }
+
+  return data.success;
+}
+
+// =========================
+// ONLINE PAYMENT
+// =========================
+async function startOnlinePayment(user, address, items) {
+  try {
+    const amount = Number(totalEl.innerText);
+
+    const order = await createOrder(amount);
+
     const options = {
       key: "rzp_test_SwMZvhp9XZ4JY1",
-      amount: 100,
+      amount: order.amount,
       currency: order.currency,
       order_id: order.id,
-      handler: async function (response) {  
-        // 3. VERIFY PAYMENT  
-        const verifyRes = await fetch("https://storeapi-xl4c.vercel.app/api/verify-payment", {  
-          method: "POST",  
-          headers: { "Content-Type": "application/json" },  
-          body: JSON.stringify(response)  
-        });  
-        const verifyData = await verifyRes.json();  
-        if (verifyData.success) {  
-          await placeOrder(user, address, items, "ONLINE");  
-        } else {  
-          alert("Payment verification failed");  
-        }  
-      },  
-      prefill: {  
-        name: user.displayName || "",  
-        email: user.email  
-      },  
-      theme: {  
-        color: "#38bdf8"  
+
+      handler: async function (response) {
+        const ok = await verifyPayment(response);
+
+        if (!ok) {
+          alert("Payment verification failed");
+          return;
+        }
+
+        await placeOrder(user, address, items, "ONLINE");
       }
-    };  
-    
-    const rzp = new Razorpay(options);  
+    };
+
+    const rzp = new Razorpay(options);
+
+    rzp.on("payment.failed", function (res) {
+      alert("Payment Failed:\n" + JSON.stringify(res.error, null, 2));
+    });
+
     rzp.open();
+
   } catch (err) {
-    alert("Error: " + err.message);
+    alert("Payment Error:\n" + (err.message || err));
   }
 }
 
+// =========================
 // PLACE ORDER
-async function placeOrder(user, address, items, paymentMode) {
+// =========================
+async function placeOrder(user, address, items, mode) {
   try {
     await addDoc(collection(db, "orders"), {
       userId: user.uid,
       items,
       totalAmount: Number(totalEl.innerText),
       address,
-      paymentMode,
+      paymentMode: mode,
       status: "Pending",
-      paymentStatus: paymentMode === "COD" ? "Pending" : "Paid",
+      paymentStatus: mode === "COD" ? "Pending" : "Paid",
       createdAt: serverTimestamp()
     });
 
-    await clearCart(user.uid);  
-    alert("Order placed successfully!");  
+    await clearCart(user.uid);
+
+    alert("Order placed successfully!");
     window.location.href = "./home.html";
+
   } catch (err) {
-    alert(err.message);
+    alert("Order Error:\n" + (err.message || err));
   }
 }
 
-// SUBMIT / PLACE ORDER BUTTON EVENT
+// =========================
+// PLACE ORDER BUTTON
+// =========================
 paymentBtn.addEventListener("click", async (e) => {
   e.preventDefault();
 
   const user = auth.currentUser;
   if (!user) return alert("Login required");
 
-  let finalAddress = selectedAddress;
-
-  // If no saved address is selected, read and validate form values
-  if (!finalAddress) {
+  if (!selectedAddress) {
     const name = document.getElementById("name").value.trim();
     const phone = document.getElementById("phone").value.trim();
     const address = document.getElementById("address").value.trim();
 
-    if (name.length === 0 || phone.length === 0 || address.length === 0) {
-      alert("Please fill all the address details or select a saved address!");
-      return; // <-- CRITICAL FIX: Stops code execution here if form is empty
+    if (!name || !phone || !address) {
+      return alert("Fill address details");
     }
 
-    finalAddress = { name, phone, address };
-    await addAddress(finalAddress);
+    selectedAddress = { name, phone, address };
+    await addAddress(selectedAddress);
   }
 
-  // Final sanity check
-  if (!finalAddress) {
-    alert("Please select or add an address");
-    return;
-  }
-
-  // =========================
-  // COD FLOW
-  // =========================
   if (selectedPayment === "cod") {
-    await placeOrder(user, finalAddress, cartItems, "COD");
+    await placeOrder(user, selectedAddress, cartItems, "COD");
   }
 
-  // =========================
-  // ONLINE FLOW
-  // =========================
   if (selectedPayment === "razorpay") {
-    await startOnlinePayment(user, finalAddress, cartItems);
+    await startOnlinePayment(user, selectedAddress, cartItems);
   }
 });
 
+// =========================
 // INIT
+// =========================
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    document.getElementById("name").value = user.displayName || "";  
-    loadCheckout();  
+    document.getElementById("name").value = user.displayName || "";
+    loadCheckout();
     loadAddresses();
+  } else {
+    alert("Login required");
+    window.location.href = "./login.html";
   }
 });
