@@ -39,6 +39,7 @@ const savedAddressesEl = document.getElementById("saved-addresses");
 let selectedPayment = "cod";
 let selectedAddress = null;
 let cartItems = [];
+let finalTotal = 0;
 
 // =========================
 // UI EVENTS
@@ -94,8 +95,8 @@ async function loadCheckout() {
     // =========================
     // 5% PLATFORM FEE
     // =========================
-    const finalTotal = Math.ceil(total * 1.05);
 
+    finalTotal = Math.ceil(total * 1.05);
     totalEl.innerText = finalTotal;
 
   } catch (err) {
