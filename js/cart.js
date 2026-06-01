@@ -15,9 +15,8 @@ const list = document.getElementById("cart-list");
 const totalEl = document.getElementById("cart-total");
 const emptyEl = document.getElementById("cart-empty");
 function getdeliveryFee(){
-  const deliveryFee = DELIVERY_FEE;
   const deliveryfeeEl = document.getElementById("cart-delivery-fee");
-  deliveryfeeEl.innerText = `₹${deliveryFee}`
+  deliveryfeeEl.innerText = `Delivery fee :₹${DELIVERY_FEE}`
 }
 // NAV
 document.getElementById("home-btn").onclick = () => {
