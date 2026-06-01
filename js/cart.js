@@ -13,6 +13,7 @@ protectRoute(["customer", "admin"]);
 
 const list = document.getElementById("cart-list");
 const totalEl = document.getElementById("cart-total");
+const totalppEl = document.getElementById("cart-total-product-price");
 const emptyEl = document.getElementById("cart-empty");
 function getdeliveryFee(){
   const deliveryfeeEl = document.getElementById("cart-delivery-fee");
@@ -102,8 +103,9 @@ async function loadCart() {
 
     list.appendChild(div);
   });
-
-  totalEl.innerText = "Total: ₹" + totalpp + DELIVERY_FEE;
+  totalppEl.innerText = 'Total Product Price :${totalpp}'
+  const totalAmount = totalpp + DELIVERY_FEE;
+  totalEl.innerText = "Total: ₹" + totalAmount;
  }catch(err){
      alert("Error:" + err)
   }
