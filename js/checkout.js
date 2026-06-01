@@ -208,8 +208,7 @@ async function verifyPayment(payload) {
 // =========================
 async function startOnlinePayment(user, address, items) {
   try {
-    const amount = Number(totalEl.innerText);
-
+    alert("GLOBAL TOTAL: " + finalTotal);
     const order = await createOrder(finalTotal);
 
     const options = {
