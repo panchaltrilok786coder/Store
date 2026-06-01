@@ -221,13 +221,14 @@ paymentBtn.addEventListener("click", async (e) => {
   let finalAddress = selectedAddress;
 
   // If no saved address, take from form
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const address = document.getElementById("address").value;
+
   if (!finalAddress) {
     if(name.length === 0 || phone.length === 0 || address.length === 0){
     alert("Please fill the details !!");
     }else{
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
-    const address = document.getElementById("address").value;
     finalAddress = { name, phone, address };
     await addAddress(finalAddress);
     }
