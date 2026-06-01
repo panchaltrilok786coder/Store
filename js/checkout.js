@@ -50,6 +50,7 @@ async function loadCheckout() {
   }
 
   let total = 0;
+  let totalAmount;
   itemsContainer.innerHTML = "";
 
   cartItems.forEach(item => {
@@ -69,8 +70,8 @@ async function loadCheckout() {
 
     itemsContainer.appendChild(div);
   });
-
-  totalEl.innerText = total;
+  totalAmount = total*1.05
+  totalEl.innerText = totalAmount;
 }
 
 // Loading Address
