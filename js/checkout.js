@@ -222,13 +222,15 @@ paymentBtn.addEventListener("click", async (e) => {
 
   // If no saved address, take from form
   if (!finalAddress) {
+    if(name.length === 0 || phone.length === 0 || address.length === 0){
+    alert("Please fill the details !!");
+    }else{
     const name = document.getElementById("name").value;
     const phone = document.getElementById("phone").value;
     const address = document.getElementById("address").value;
-
     finalAddress = { name, phone, address };
-
     await addAddress(finalAddress);
+    }
   }
 
   // Validate address
