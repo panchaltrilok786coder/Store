@@ -61,11 +61,11 @@ async function loadCart() {
 
   emptyEl.classList.add("hidden");
 
-  let total = 0;
+  let totalpp = 0;
 
   items.forEach(item => {
 
-    total += item.price * item.quantity;
+    totalpp += item.price * item.quantity;
 
     const div = document.createElement("div");
     div.className = "cart-card";
@@ -104,7 +104,7 @@ async function loadCart() {
     list.appendChild(div);
   });
 
-  totalEl.innerText = "Total: ₹" + total;
+  totalEl.innerText = "Total: ₹" + totalpp + DELIVERY_FEE;
  }catch(err){
      alert("Error:" + err)
   }
