@@ -178,7 +178,7 @@ async function startOnlinePayment(user, address, items) {
     rzp.open();
 
   } catch (err) {
-    alert(err.message);
+    alert("Error :" + err.message);
   }
 }
 
