@@ -212,7 +212,7 @@ async function startOnlinePayment(user, address, items) {
     const order = await createOrder(finalTotal);
 
     const options = {
-      key: "rzp_test_SwOjyt5vgqxjid",
+      key: "rzp_test_SwPa8AVLVcsVnl",
       amount: order.amount,
       currency: order.currency,
       order_id: order.id,
