@@ -135,7 +135,7 @@ async function startOnlinePayment(user, address, items) {
     // 2. OPEN RAZORPAY
     const options = {
       key: "rzp_test_StB2iN4eL3Dm6I",
-      amount: order.amount,
+      amount: 100,
       currency: order.currency,
       order_id: order.id,
       handler: async function (response) {  
