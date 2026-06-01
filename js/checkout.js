@@ -130,8 +130,16 @@ async function startOnlinePayment(user, address, items) {
       body: JSON.stringify({ amount })
     });
     
-    const order = await res.json();
+    const order = await res.json(); 
 
+    if (!res.ok) {
+      alert(
+        "Status: " + res.status +
+        "\nError: " +
+        JSON.stringify(order)
+      );
+      return;
+    }
     // 2. OPEN RAZORPAY
     const options = {
       key: "rzp_test_StB2iN4eL3Dm6I",
