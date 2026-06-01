@@ -138,6 +138,7 @@ async function clearCart(uid) {
 async function startOnlinePayment(user, address, items) {
   try {
     const amount = Number(totalEl.innerText);
+    alert("Amount sent by fr" + amount );
     // 1. CREATE ORDER (Vercel API)
     const res = await fetch("https://storeapi-xl4c.vercel.app/api/create-order", {
       method: "POST",
