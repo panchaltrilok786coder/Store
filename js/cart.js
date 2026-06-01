@@ -103,7 +103,7 @@ async function loadCart() {
 
     list.appendChild(div);
   });
-  totalppEl.innerText = 'Total Product Price :${totalpp}'
+  totalppEl.innerText = 'Total Product Price :₹${totalpp}'
   const totalAmount = totalpp + DELIVERY_FEE;
   totalEl.innerText = "Total: ₹" + totalAmount;
  }catch(err){
