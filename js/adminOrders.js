@@ -171,7 +171,11 @@ onAuthStateChanged(auth, (user) => {
   }
 
   // Default load
-  loadOrders(collection(db, "orders"));
+  const q = query(
+  collection(db, "orders"),
+  orderBy("createdAt", "desc")
+  );
+  loadOrders(q);
 
   // Setup filters
   setupFilters();
