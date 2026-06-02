@@ -16,7 +16,8 @@ const totalppEl = document.getElementById("cart-total-product-price");
 const emptyEl = document.getElementById("cart-empty");
 function getdeliveryFee(cost){
   const deliveryfeeEl = document.getElementById("cart-delivery-fee");
-  deliveryfeeEl.innerText = `Delivery fee :₹${Math.ceil(cost*0.05)}`
+  let ceiledCost = Math.ceil(cost*0.05);
+  deliveryfeeEl.innerText = `Delivery fee :₹${ceiledCost}`
 }
 // NAV
 document.getElementById("home-btn").onclick = () => {
