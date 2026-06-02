@@ -102,8 +102,9 @@ async function loadCart() {
 
     list.appendChild(div);
   });
+  totalpp = Math.ceil(totalpp);
   totalppEl.innerText = `Total Product Price :₹${totalpp}`
-  const totalAmount = totalpp + totalpp*0.05;
+  const totalAmount = Math.ceil(totalpp + totalpp*0.05);
   getdeliveryFee(totalpp);
   totalEl.innerText = "Total: ₹" + totalAmount;
  }catch(err){
