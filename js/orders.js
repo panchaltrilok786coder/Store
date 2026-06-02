@@ -35,7 +35,8 @@ async function loadOrders(user) {
     // STEP 1: Query only THIS user's orders
     const q = query(
       collection(db, "orders"),
-      where("userId", "==", user.uid)
+      where("userId", "==", user.uid),
+      orderBy("createdAt", "desc")
     );
 
     const snapshot = await getDocs(q);
