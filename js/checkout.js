@@ -238,27 +238,53 @@ async function verifyPayment(payload) {
 }
 
 // =========================
-// ONLINE PAYMENT
+// ONLINE PAYMENT (UNIVERSAL SPEED OPTIMIZED)
 // =========================
 async function startOnlinePayment(user, address, items) {
   try {
-    alert("GLOBAL TOTAL: " + finalTotal);
     const order = await createOrder(finalTotal);
-    alert(order.id);
+    
     const options = {
       key: "rzp_live_SwQ9c22ItvJNH5",
       amount: order.amount,
       currency: order.currency,
       order_id: order.id,
+      name: "Your Store Name", 
+      description: "Product Purchase",
+      
+      // PREFILL: Skips standard setup windows entirely
+      prefill: {
+        name: address.name || user.displayName || "",
+        email: user.email || "customer@example.com", 
+        contact: address.phone || "" 
+      },
+      
+      // NATIVE SHEET ROUTING FOR ALL UPI INSTANCE OPTIONS
+      config: {
+        display: {
+          blocks: {
+            all_upi: {
+              name: "Pay via Any UPI App Instantly",
+              instruments: [
+                {
+                  method: "upi" // Stripped down to catch ALL local device intents dynamically
+                }
+              ]
+            }
+          },
+          sequence: ["block.all_upi"], 
+          preferences: {
+            show_default_blocks: true
+          }
+        }
+      },
 
       handler: async function (response) {
         const ok = await verifyPayment(response);
-
         if (!ok) {
           alert("Payment verification failed");
           return;
         }
-
         await placeOrder(user, address, items, "ONLINE");
       }
     };
@@ -266,7 +292,8 @@ async function startOnlinePayment(user, address, items) {
     const rzp = new Razorpay(options);
 
     rzp.on("payment.failed", function (res) {
-      alert("Payment Failed:\n" + JSON.stringify(res.error, null, 2));
+      alert("Payment Cancelled or Failed. Please try another method.");
+      console.error(res.error);
     });
 
     rzp.open();
