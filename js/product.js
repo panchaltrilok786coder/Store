@@ -49,8 +49,10 @@ async function loadProduct() {
 
 // FIXED: Added missing closing parenthesis and updated variables
 buynowBtn.addEventListener("click", () => {
-    window.location.href = `./checkout.html?id=${productId}&itemCount=1`; 
+    // Added &source=buynow to clearly distinguish this flow from a normal cart checkout
+    window.location.href = `./checkout.html?id=${productId}&itemCount=1&source=buynow`; 
 });
+
 
 // FIXED: Added missing closing parenthesis
 addToCartBtn.addEventListener("click", () => {
