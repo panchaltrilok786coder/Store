@@ -32,7 +32,6 @@ const relatedGrid = document.getElementById("related-products");
 
 // ================= LOAD PRODUCT =================
 async function loadProduct() {
-
   const ref = doc(db, "products", productId);
   const snap = await getDoc(ref);
 
@@ -46,82 +45,80 @@ async function loadProduct() {
   nameEl.innerText = data.name;
   priceEl.innerText = "₹" + data.price;
   imageEl.src = data.imageURL;
-
 }
 
+// FIXED: Added missing closing parenthesis and updated variables
 buynowBtn.addEventListener("click", () => {
-    window.location.href = `./checkout.html?id=${id}&itemCount=${itemCount}`;
-}
+    window.location.href = `./checkout.html?id=${productId}&itemCount=1`; 
+});
 
+// FIXED: Added missing closing parenthesis
 addToCartBtn.addEventListener("click", () => {
     addToCart({
-    id: productId,
-    name: nameEl.innerText,
-    price: Number(priceEl.innerText.replace("₹", "")),
-    imageURL: imageEl.src
-  });
-}
+      id: productId,
+      name: nameEl.innerText,
+      price: Number(priceEl.innerText.replace("₹", "")),
+      imageURL: imageEl.src
+    });
+});
+
 
 // ================= RELATED PRODUCTS =================
 async function loadRelated() {
-
   const snapshot = await getDocs(collection(db, "products"));
-
   relatedGrid.innerHTML = "";
 
   snapshot.forEach((docSnap) => {
-
     if (docSnap.id === productId) return;
 
     const data = docSnap.data();
-
     const card = document.createElement("div");
     card.className = "product-product-card";
-     
-  card.innerHTML = `
-    <img class="product-product-image" src="${data.imageURL || "https://via.placeholder.com/300"}" />
-    
-    <h3 class="product-product-title">${data.name}</h3>
-    
-    <p class="product-product-price">₹${data.price}</p>
 
-    <div class="product-product-actions">
-       <button class="product-btn product-btn-view" data-id="${docSnap.id}">
-        View
-      </button>
-      <button class="product-btn product-btn-cart" data-id="${docSnap.id}">
-        Add
-      </button>
-    </div>
-  `;
+    // FIXED: Added data attributes to the card so the click listener can grab them easily
+    card.innerHTML = `
+      <img class="product-product-image" src="${data.imageURL || "https://via.placeholder.com/300"}" />
+      <h3 class="product-product-title">${data.name}</h3>
+      <p class="product-product-price">₹${data.price}</p>
+      <div class="product-product-actions">
+         <button class="product-btn product-btn-view" data-id="${docSnap.id}">
+          View
+        </button>
+        <button class="product-btn product-btn-cart" 
+                data-id="${docSnap.id}" 
+                data-name="${data.name}" 
+                data-price="${data.price}" 
+                data-image="${data.imageURL || ''}">
+          Add
+        </button>
+      </div>
+    `;
     relatedGrid.appendChild(card);
   });
-
 }
 
 
 // ================= CARD ACTIONS =================
 relatedGrid.addEventListener("click", (e) => {
-
-  const id = e.target.dataset.id;
+  const target = e.target;
+  const id = target.dataset.id;
 
   // VIEW PRODUCT
-  if (e.target.classList.contains("product-btn-view")) {
-    // redirect to product page
+  if (target.classList.contains("product-btn-view")) {
     window.location.href = `./product.html?id=${id}`;
   }
 
-  // ADD TO CART (placeholder)
-  if (e.target.classList.contains("product-btn-cart")) {
+  // ADD TO CART
+  // FIXED: Now correctly extracts data attributes from the specific card clicked
+  if (target.classList.contains("product-btn-cart")) {
     addToCart({
-    id: productId,
-    name: nameEl.innerText,
-    price: Number(priceEl.innerText.replace("₹", "")),
-    imageURL: imageEl.src
-  });
+      id: id,
+      name: target.dataset.name,
+      price: Number(target.dataset.price),
+      imageURL: target.dataset.image
+    });
     alert("Added to cart");
   }
-
 });
 
 
