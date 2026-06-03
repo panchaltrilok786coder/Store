@@ -238,7 +238,7 @@ async function verifyPayment(payload) {
 }
 
 // =========================
-// UNIVERSAL SPEED OPTIMIZATION (FORCE NATIVE INTENT ONLY)
+// UNIVERSAL SPEED OPTIMIZATION
 // =========================
 async function startOnlinePayment(user, address, items) {
   try {
@@ -258,27 +258,23 @@ async function startOnlinePayment(user, address, items) {
         contact: address.phone || ""
       },
       
-      // NEW HARDENED BLOCK CONFIGURATION
+      // FIXED: Cleared broken nesting structure and clean-merged arrays
       config: {
         display: {
           blocks: {
-            upi: {
+            all_upi: {
               name: "Pay via Any UPI App Instantly",
               instruments: [
                 {
                   method: "upi",
-                  // This explicit empty array structure forces Razorpay to request the 
-                  // device's native app operating tray system directly, skipping web fallbacks.
-                  apps: [] 
+                  apps: [] // Forces native dynamic app intents on mobiles
                 }
               ]
             }
           },
-          sequence: ["block.upi"], 
+          sequence: ["block.all_upi"], 
           preferences: {
-            // Disabling default blocks prevents it from falling back to manual VPA 
-            // text inputs if a deep link glitches out.
-            show_default_blocks: false 
+            show_default_blocks: true // Retains cards, netbanking, and fallback structures underneath
           }
         }
       },
@@ -306,13 +302,11 @@ async function startOnlinePayment(user, address, items) {
   }
 }
 
-
 // =========================
 // PLACE ORDER
 // =========================
 async function placeOrder(user, address, items, mode) {
   try {
-    // Both configurations generate the exact same order structure
     await addDoc(collection(db, "orders"), {
       userId: user.uid,
       items,
@@ -324,7 +318,6 @@ async function placeOrder(user, address, items, mode) {
       createdAt: serverTimestamp()
     });
 
-    // Safe Check: Only wipe the cart database if they did NOT use 'Buy Now'
     if (checkoutSource !== "buynow") {
       await clearCart(user.uid);
     }
