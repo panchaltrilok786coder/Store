@@ -238,7 +238,7 @@ async function verifyPayment(payload) {
 }
 
 // =========================
-// ONLINE PAYMENT (UNIVERSAL SPEED OPTIMIZED)
+// UNIVERSAL SPEED OPTIMIZATION (FORCE NATIVE INTENT ONLY)
 // =========================
 async function startOnlinePayment(user, address, items) {
   try {
@@ -252,29 +252,33 @@ async function startOnlinePayment(user, address, items) {
       name: "Your Store Name", 
       description: "Product Purchase",
       
-      // PREFILL: Skips standard setup windows entirely
       prefill: {
         name: address.name || user.displayName || "",
         email: user.email || "customer@example.com", 
-        contact: address.phone || "" 
+        contact: address.phone || ""
       },
       
-      // NATIVE SHEET ROUTING FOR ALL UPI INSTANCE OPTIONS
+      // NEW HARDENED BLOCK CONFIGURATION
       config: {
         display: {
           blocks: {
-            all_upi: {
+            upi: {
               name: "Pay via Any UPI App Instantly",
               instruments: [
                 {
-                  method: "upi" // Stripped down to catch ALL local device intents dynamically
+                  method: "upi",
+                  // This explicit empty array structure forces Razorpay to request the 
+                  // device's native app operating tray system directly, skipping web fallbacks.
+                  apps: [] 
                 }
               ]
             }
           },
-          sequence: ["block.all_upi"], 
+          sequence: ["block.upi"], 
           preferences: {
-            show_default_blocks: true
+            // Disabling default blocks prevents it from falling back to manual VPA 
+            // text inputs if a deep link glitches out.
+            show_default_blocks: false 
           }
         }
       },
@@ -293,7 +297,6 @@ async function startOnlinePayment(user, address, items) {
 
     rzp.on("payment.failed", function (res) {
       alert("Payment Cancelled or Failed. Please try another method.");
-      console.error(res.error);
     });
 
     rzp.open();
@@ -302,6 +305,7 @@ async function startOnlinePayment(user, address, items) {
     alert("Payment Error:\n" + (err.message || err));
   }
 }
+
 
 // =========================
 // PLACE ORDER
