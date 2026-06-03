@@ -12,7 +12,8 @@ import {
   serverTimestamp,
   doc,
   deleteDoc,
-  getDocs
+  getDocs,
+  getDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 import {
@@ -34,11 +35,22 @@ const form = document.getElementById("address-form-section");
 const savedAddressesEl = document.getElementById("saved-addresses");
 
 // =========================
+// URL PARAMS FOR BUY NOW
+// =========================
+const params = new URLSearchParams(window.location.search);
+const checkoutSource = params.get("source") || null;
+const buyNowProductId = params.get("id") || null;
+
+// Safely handle parsing the integer so it never returns NaN
+const parsedQuantity = parseInt(params.get("itemCount"), 10);
+const buyNowQuantity = isNaN(parsedQuantity) ? 1 : parsedQuantity;
+
+// =========================
 // STATE
 // =========================
 let selectedPayment = "cod";
 let selectedAddress = null;
-let cartItems = [];
+let checkoutItems = []; 
 let finalTotal = 0;
 
 // =========================
@@ -63,9 +75,32 @@ document.querySelectorAll('input[name="payment"]').forEach(radio => {
 // =========================
 async function loadCheckout() {
   try {
-    cartItems = await getCart();
+    // 1. HYBRID DATA CAPTURE
+    if (checkoutSource === "buynow" && buyNowProductId) {
+      const productRef = doc(db, "products", buyNowProductId);
+      const productSnap = await getDoc(productRef);
 
-    if (cartItems.length === 0) {
+      if (productSnap.exists()) {
+        const productData = productSnap.data();
+        checkoutItems = [{
+          id: buyNowProductId,
+          name: productData.name,
+          price: Number(productData.price),
+          imageURL: productData.imageURL,
+          quantity: buyNowQuantity
+        }];
+      } else {
+        alert("Product not found");
+        window.location.href = "./home.html";
+        return;
+      }
+    } else {
+      // Fallback to classic cart retrieval when URL parameters are missing
+      checkoutItems = await getCart();
+    }
+
+    // 2. RENDER INTERFACE
+    if (checkoutItems.length === 0) {
       itemsContainer.innerHTML = "<p>Your cart is empty</p>";
       totalEl.innerText = "0";
       return;
@@ -74,7 +109,7 @@ async function loadCheckout() {
     let total = 0;
     itemsContainer.innerHTML = "";
 
-    cartItems.forEach(item => {
+    checkoutItems.forEach(item => {
       total += item.price * item.quantity;
 
       const div = document.createElement("div");
@@ -95,7 +130,6 @@ async function loadCheckout() {
     // =========================
     // 5% PLATFORM FEE
     // =========================
-
     finalTotal = Math.ceil(total * 1.05);
     totalEl.innerText = finalTotal;
 
@@ -247,6 +281,7 @@ async function startOnlinePayment(user, address, items) {
 // =========================
 async function placeOrder(user, address, items, mode) {
   try {
+    // Both configurations generate the exact same order structure
     await addDoc(collection(db, "orders"), {
       userId: user.uid,
       items,
@@ -258,7 +293,10 @@ async function placeOrder(user, address, items, mode) {
       createdAt: serverTimestamp()
     });
 
-    await clearCart(user.uid);
+    // Safe Check: Only wipe the cart database if they did NOT use 'Buy Now'
+    if (checkoutSource !== "buynow") {
+      await clearCart(user.uid);
+    }
 
     alert("Order placed successfully!");
     window.location.href = "./home.html";
@@ -277,6 +315,10 @@ paymentBtn.addEventListener("click", async (e) => {
   const user = auth.currentUser;
   if (!user) return alert("Login required");
 
+  if (checkoutItems.length === 0) {
+    return alert("No items to checkout");
+  }
+
   if (!selectedAddress) {
     const name = document.getElementById("name").value.trim();
     const phone = document.getElementById("phone").value.trim();
@@ -291,11 +333,11 @@ paymentBtn.addEventListener("click", async (e) => {
   }
 
   if (selectedPayment === "cod") {
-    await placeOrder(user, selectedAddress, cartItems, "COD");
+    await placeOrder(user, selectedAddress, checkoutItems, "COD");
   }
 
   if (selectedPayment === "razorpay") {
-    await startOnlinePayment(user, selectedAddress, cartItems);
+    await startOnlinePayment(user, selectedAddress, checkoutItems);
   }
 });
 
