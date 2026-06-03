@@ -258,7 +258,7 @@ async function startOnlinePayment(user, address, items) {
         contact: address.phone || ""
       },
       
-      // FIXED: Cleared broken nesting structure and clean-merged arrays
+      // FIXED: Cleared out all duplicate syntax structures safely
       config: {
         display: {
           blocks: {
@@ -267,14 +267,23 @@ async function startOnlinePayment(user, address, items) {
               instruments: [
                 {
                   method: "upi",
-                  apps: [] // Forces native dynamic app intents on mobiles
+                  apps: [] // Forces the mobile local native application sheet overlay
+                }
+              ]
+            },
+            manual_upi: {
+              name: "Other UPI Options",
+              instruments: [
+                {
+                  method: "upi",
+                  pools: ["vpa"] // Explicitly retains the classic text input wrapper for structural VPA strings
                 }
               ]
             }
           },
-          sequence: ["block.all_upi"], 
+          sequence: ["block.all_upi", "block.manual_upi"], 
           preferences: {
-            show_default_blocks: true // Retains cards, netbanking, and fallback structures underneath
+            show_default_blocks: true // Correctly brings back Cards, Banking, Wallets underneath smoothly
           }
         }
       },
