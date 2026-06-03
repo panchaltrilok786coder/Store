@@ -4,96 +4,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <meta name="description" content="Store Product Details Page" />
-
   <title>Product - Store</title>
-
   <link rel="stylesheet" href="product.css" />
   <script type="module" src="js/product.js" defer></script>
 </head>
 
 <body>
 
-  
-  <!-- ================= NAVBAR ================= -->
- <header class="product-navbar">
-
-  <!-- ROW 1: LOGO -->
-  <div class="product-navbar-top">
-    <h1 class="product-logo">STORE</h1>
-  </div>
-
-  <!-- ROW 2: SEARCH + ACTIONS -->
-  <div class="product-navbar-bottom">
-
-    <input
-      type="text"
-      id="product-search-input"
-      class="product-search-input"
-      placeholder="Search products..."
-    />
-
-    <div class="product-nav-actions">
-      <button id="product-cart-btn" class="product-btn-nav">Cart</button>
-      <button id="product-home-btn" class="product-btn-nav">Home</button>
-      <button id="product-orders-btn"  class="product-btn-nav">Orders</button>
-      <button id="product-logout-btn" class="product-btn-nav">Logout</button>
+  <header class="product-navbar">
+    <div class="product-navbar-top">
+      <h1 class="product-logo">STORE</h1>
     </div>
 
-  </div>
+    <div class="product-navbar-bottom">
+      <input
+        type="text"
+        id="product-search-input"
+        class="product-search-input"
+        placeholder="Search products..."
+      />
+      <div class="product-nav-actions">
+        <button id="product-cart-btn" class="product-btn-nav">Cart</button>
+        <button id="product-home-btn" class="product-btn-nav">Home</button>
+        <button id="product-orders-btn" class="product-btn-nav">Orders</button>
+        <button id="product-logout-btn" class="product-btn-nav">Logout</button>
+      </div>
+    </div>
+  </header>
 
-</header>
-
-
-  <!-- ================= PRODUCT DETAILS ================= -->
   <main class="product-main">
-
     <section class="product-details-card">
+      <div class="product-image-wrapper">
+        <img id="product-image" alt="Product Image" />
+      </div>
 
-  <!-- IMAGE -->
-  <div class="product-image-wrapper">
-    <img id="product-image" alt="Product Image" />
-  </div>
+      <article class="product-info">
+        <header class="product-header">
+          <h1 id="product-name" class="product-title">Loading Product...</h1>
+          <p id="product-price" class="product-price"></p>
+        </header>
 
-  <!-- INFO -->
-  <article class="product-info">
+        <section class="product-description">
+          <p id="product-description-text">No description available</p>
+        </section>
 
-    <header class="product-header">
-      <h1 id="product-name" class="product-title"></h1>
-      <p id="product-price" class="product-price"></p>
-    </header>
+        <div class="product-qty-container">
+          <span class="product-qty-label">Quantity:</span>
+          <div class="product-qty-controls">
+            <button id="qty-minus-btn" class="product-qty-btn" aria-label="Decrease quantity">—</button>
+            <span id="qty-value" class="product-qty-value">1</span>
+            <button id="qty-plus-btn" class="product-qty-btn" aria-label="Increase quantity">+</button>
+          </div>
+        </div>
 
-    <section class="product-description">
-      <p id="product-description-text">
-        No description available
-      </p>
+        <footer class="product-actions">
+          <button id="add-to-cart-btn" class="product-btn product-btn-primary">
+            Add to Cart
+          </button>
+          <button id="buy-nowBtn" class="product-btn product-btn-secondary">
+            Buy Now
+          </button>
+        </footer>
+      </article>
     </section>
 
-    <footer class="product-actions">
-      <button id="add-to-cart-btn" class="product-btn product-btn-primary">
-        Add to Cart
-      </button>
-      <button id="buy-nowBtn" class="product-btn product-btn-secondary">
-        Buy Now
-      </button>
-    </footer>
-
-  </article>
-
-</section>
-
-    <!-- ================= RELATED PRODUCTS ================= -->
     <section class="related-section">
-
       <h3>Related Products</h3>
-
       <div id="related-products" class="related-grid"></div>
-
     </section>
-
   </main>
 
 </body>
-
 </html>
