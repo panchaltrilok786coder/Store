@@ -24,6 +24,8 @@ const productId = params.get("id");
 const nameEl = document.getElementById("product-name");
 const priceEl = document.getElementById("product-price");
 const imageEl = document.getElementById("product-image");
+const buynowBtn = document.getElementById("buy-nowBtn");
+const addToCartBtn = document.getElementById("add-to-cart-btn");
 
 const relatedGrid = document.getElementById("related-products");
 
@@ -47,6 +49,18 @@ async function loadProduct() {
 
 }
 
+buynowBtn.addEventListener("click", () => {
+    window.location.href = `./checkout.html?id=${id}&itemCount=${itemCount}`;
+}
+
+addToCartBtn.addEventListener("click", () => {
+    addToCart({
+    id: productId,
+    name: nameEl.innerText,
+    price: Number(priceEl.innerText.replace("₹", "")),
+    imageURL: imageEl.src
+  });
+}
 
 // ================= RELATED PRODUCTS =================
 async function loadRelated() {
