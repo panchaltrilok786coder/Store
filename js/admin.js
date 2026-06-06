@@ -38,7 +38,7 @@ imageInput.addEventListener("change", () => {
 });
 
 async function uploadImageToCloudinary(file) {
-
+  try{
   const formData = new FormData();
 
   formData.append("file", file);
@@ -58,6 +58,10 @@ async function uploadImageToCloudinary(file) {
   const data = await response.json();
 
   return data.secure_url;
+  }catch(err){
+  alert("Error");
+  return;
+  }
 }
 
 
