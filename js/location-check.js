@@ -116,7 +116,7 @@ function executeUIUpdate() {
 }
 
 function applyLocationRestrictions() {
-    const dynamicButtons = document.querySelectorAll('.home-btn-cart, .product-btn-cart, #checkout-button');
+    const dynamicButtons = document.querySelectorAll('.home-btn-cart, .product-btn-cart, #checkout-button, .product-btn-primary');
 
     dynamicButtons.forEach(button => {
         button.disabled = true;
@@ -134,7 +134,7 @@ function applyLocationRestrictions() {
 }
 
 function liftLocationRestrictions() {
-    const dynamicButtons = document.querySelectorAll('.home-btn-cart, .product-btn-cart, #checkout-button');
+    const dynamicButtons = document.querySelectorAll('.home-btn-cart, .product-btn-cart, #checkout-button, .product-btn-primary');
 
     dynamicButtons.forEach(button => {
         button.disabled = false;
