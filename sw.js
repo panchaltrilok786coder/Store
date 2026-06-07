@@ -1,6 +1,6 @@
 // sw.js
 // BUMPED VERSION: Changed from 'store-locals-v1' to 'store-locals-v2' to trigger the update!
-const CACHE_NAME = 'store-locals-v3';
+const CACHE_NAME = 'store-locals-v1';
 
 // 1. STATIC PRECACHING ARRAY:
 // Added your new location-check.js file here so it's part of the core app shell.
