@@ -7,7 +7,7 @@ const CACHE_NAME = 'store-locals-v2';
 const ASSETS_TO_CACHE = [
   './home.html',
   './manifest.json',
-  './location-check.js', // <-- NEW FILE ADDED HERE
+  './js/location-check.js', // <-- NEW FILE ADDED HERE
   './icons/192x192.png',
   './icons/512x512.png'
 ];
