@@ -17,9 +17,12 @@ const STORE_CONFIG = {
 let userLocationState = {
     isServiceable: false,
     hasChecked: false,
-    statusType: "checking", // Tracks 'checking', 'approved', 'denied', 'outside-zone', or 'error'
+    statusType: "checking", 
     errorMessage: "Checking delivery eligibility..."
 };
+
+// Global reference for our observer so we can control it
+let pageObserver = null;
 
 // ==========================================
 // 1. DISTANCE MATHEMATICS (Haversine Formula)
@@ -45,7 +48,7 @@ function checkUserLocation() {
         userLocationState.hasChecked = true;
         userLocationState.statusType = "not-supported";
         userLocationState.errorMessage = "Geolocation is not supported by this browser.";
-        applyLocationRestrictions();
+        executeUIUpdate();
         return;
     }
 
@@ -66,12 +69,12 @@ function checkUserLocation() {
             if (distanceAway <= STORE_CONFIG.radiusKm) {
                 userLocationState.isServiceable = true;
                 userLocationState.statusType = "approved";
-                liftLocationRestrictions();
+                executeUIUpdate();
             } else {
                 userLocationState.isServiceable = false;
                 userLocationState.statusType = "outside-zone";
                 userLocationState.errorMessage = `You are ${distanceAway.toFixed(1)}km away. We only deliver within ${STORE_CONFIG.radiusKm}km.`;
-                applyLocationRestrictions();
+                executeUIUpdate();
             }
         },
         (error) => {
@@ -85,27 +88,45 @@ function checkUserLocation() {
                 userLocationState.statusType = "error";
                 userLocationState.errorMessage = "Unable to determine your location. Ordering disabled.";
             }
-            applyLocationRestrictions();
+            executeUIUpdate();
         },
         { enableHighAccuracy: true, timeout: 10000 }
     );
 }
 
 // ==========================================
-// 3. UI MANIPULATION (Locking / Unlocking)
+// 3. UI MANAGEMENT ENGINE (Safe from Infinite Loops)
 // ==========================================
 
+function executeUIUpdate() {
+    // 1. Temporarily pause the observer while we modify the DOM
+    if (pageObserver) pageObserver.disconnect();
+
+    // 2. Determine whether to lock or unlock elements
+    if (userLocationState.hasChecked && userLocationState.isServiceable) {
+        liftLocationRestrictions();
+    } else {
+        applyLocationRestrictions();
+    }
+
+    // 3. Safely resume observing the DOM changes
+    if (pageObserver) {
+        pageObserver.observe(document.body, { childList: true, subtree: true });
+    }
+}
+
 function applyLocationRestrictions() {
-    // Find all target buttons currently rendered on the screen
     const dynamicButtons = document.querySelectorAll('.home-btn-cart, .product-btn-cart, #checkout-button');
 
     dynamicButtons.forEach(button => {
         button.disabled = true;
-        // Save original text securely if not already done
         if (!button.getAttribute('data-original-text')) {
             button.setAttribute('data-original-text', button.textContent.trim());
         }
-        button.textContent = "Browsing Mode Only";
+        // Only update text if it isn't already changed (prevents unnecessary layout shifts)
+        if (button.textContent !== "Browsing Mode Only") {
+            button.textContent = "Browsing Mode Only";
+        }
         button.classList.add('pwa-disabled-btn');
     });
 
@@ -118,7 +139,7 @@ function liftLocationRestrictions() {
     dynamicButtons.forEach(button => {
         button.disabled = false;
         const originalText = button.getAttribute('data-original-text');
-        if (originalText) {
+        if (originalText && button.textContent !== originalText) {
             button.textContent = originalText;
         }
         button.classList.remove('pwa-disabled-btn');
@@ -136,7 +157,6 @@ function showTopBanner() {
     if (!banner) {
         banner = document.createElement('div');
         banner.id = STORE_CONFIG.bannerId;
-        // position: sticky ensures it plays nice with dynamic layout updates
         banner.style.cssText = "position: sticky; top: 0; left: 0; width: 100%; background: #fff3cd; color: #856404; text-align: center; padding: 12px 15px; font-weight: bold; font-size: 14px; z-index: 99999; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-bottom: 1px solid #ffeeba; box-sizing: border-box;";
         document.body.prepend(banner);
     }
@@ -149,7 +169,9 @@ function showTopBanner() {
         displayMessage = "📍 Location access blocked. Please enable location to buy items.";
     }
 
-    banner.textContent = displayMessage;
+    if (banner.textContent !== displayMessage) {
+        banner.textContent = displayMessage;
+    }
     banner.style.display = 'block';
 }
 
@@ -164,29 +186,19 @@ function hideTopBanner() {
 // 5. INITIALIZATION & DYNAMIC MUTATION ENGINE
 // ==========================================
 
-// Step A: Kick off the primary load rules when document loads
 document.addEventListener("DOMContentLoaded", () => {
-    applyLocationRestrictions();
+    // Initialize UI adjustments straight away
+    executeUIUpdate();
     checkUserLocation();
-});
 
-// Step B: Pure Vanilla dynamic listener. 
-// Whenever product.js injects new HTML, this instantly intercepts it.
-const pageObserver = new MutationObserver(() => {
-    if (userLocationState.hasChecked) {
-        if (userLocationState.isServiceable) {
-            liftLocationRestrictions();
-        } else {
-            applyLocationRestrictions();
-        }
-    } else {
-        // If the geolocation check hasn't finished responding yet, keep incoming buttons locked
-        applyLocationRestrictions();
-    }
-});
+    // Set up the dynamic page-switch listener cleanly
+    pageObserver = new MutationObserver(() => {
+        executeUIUpdate();
+    });
 
-// Start watching the body for dynamic switches
-pageObserver.observe(document.body, {
-    childList: true,
-    subtree: true
+    // Fire up the observer
+    pageObserver.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
 });
