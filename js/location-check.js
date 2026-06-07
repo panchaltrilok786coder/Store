@@ -2,7 +2,7 @@
  * PWA Location-Based Ordering Guard
  * Works for Vanilla JS / HTML standard setups.
  */
-
+alert("Location.js");
 // ==========================================
 // CONFIGURATION: Set your shop's details here
 // ==========================================
