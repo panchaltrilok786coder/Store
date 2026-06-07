@@ -1,11 +1,13 @@
 // sw.js
-const CACHE_NAME = 'store-locals-v1';
+// BUMPED VERSION: Changed from 'store-locals-v1' to 'store-locals-v2' to trigger the update!
+const CACHE_NAME = 'store-locals-v2';
 
 // 1. STATIC PRECACHING ARRAY:
-// These are the bare minimum files needed to render your visual app shell container instantly.
+// Added your new location-check.js file here so it's part of the core app shell.
 const ASSETS_TO_CACHE = [
   './home.html',
   './manifest.json',
+  './location-check.js', // <-- NEW FILE ADDED HERE
   './icons/192x192.png',
   './icons/512x512.png'
 ];
@@ -60,13 +62,13 @@ self.addEventListener('fetch', (event) => {
       })
       .catch(() => {
         console.log('[Service Worker] Network connection dropped. Activating local device storage fallbacks...');
-        
+
         // IF THE DEVICE GOES OFFLINE: Evaluate cached assets matching the specific request path
         return caches.match(event.request).then((cachedResponse) => {
           if (cachedResponse) {
             return cachedResponse;
           }
-          
+
           // If the specific page/asset asset isn't inside the cache database,
           // capture navigational failures and force them cleanly back to home.html instead of crashing
           if (event.request.mode === 'navigate') {
