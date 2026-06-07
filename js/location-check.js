@@ -114,7 +114,7 @@ function applyLocationRestrictions(reason) {
 }
 
 function liftLocationRestrictions() {
-    const dynamicButtons = document.querySelectorAll('.btn-add-to-cart, .add-to-cart-btn, #checkout-button');
+    const dynamicButtons = document.querySelectorAll('.home-btn-cart, .product-btn-cart, #checkout-button');
 
     dynamicButtons.forEach(button => {
         button.disabled = false;
