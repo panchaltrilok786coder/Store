@@ -9,7 +9,7 @@
 const STORE_CONFIG = {
     latitude: 18.957382,    // Replace with your business latitude
     longitude: 73.016883,  // Replace with your business longitude
-    radiusKm: 1,         // Your maximum delivery radius in kilometers
+    radiusKm: 0.3,         // Your maximum delivery radius in kilometers
     bannerId: 'pwa-location-banner' // The ID of the HTML element for notices
 };
 
