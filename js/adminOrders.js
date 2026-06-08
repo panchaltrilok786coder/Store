@@ -121,19 +121,27 @@ function renderOrders() {
 }
 
 
-// ================= NOTIFICATIONS ENGINE =================
-// System-managed device notifications
-function triggerAdminAlerts(order) {
-  console.log("🚨 New Order Received:", order.id);
+// ================= BACKGROUND NOTIFICATIONS ENGINE =================
+// MODIFIED: This function now targets the Service Worker layer, forcing 
+// background tabs and minimized states to ring out and show OS notifications.
+async function triggerAdminAlerts(order) {
+  console.log("🚨 New Order Received, forwarding to Service Worker:", order.id);
 
-  if (window.Notification && Notification.permission === "granted") {
-    new Notification("🚨 New Order Received!", {
-      body: `Amount: ₹${order.totalAmount || 0} from ${order.address?.name || "Customer"}`,
-      icon: "./icons/192x192.png",
-      tag: order.id, 
-      // silent: null configuration allows the OS to explicitly use its default alert sound or vibration pattern
-      silent: false  
-    });
+  if ('serviceWorker' in navigator && window.Notification && Notification.permission === "granted") {
+    try {
+      // Connect to the operational worker instance handling background processes
+      const registration = await navigator.serviceWorker.ready;
+      
+      // Fire the system notification block via the worker container context
+      registration.showNotification("🚨 New Order Received!", {
+        body: `Amount: ₹${order.totalAmount || 0} from ${order.address?.name || "Customer"}`,
+        icon: "./icons/192x192.png",
+        tag: order.id, 
+        silent: false  // Tells the OS to fire its default sound/vibrate ring pattern
+      });
+    } catch (err) {
+      console.error("Failed to trigger background notification:", err);
+    }
   }
 }
 
